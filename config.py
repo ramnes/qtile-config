@@ -62,7 +62,7 @@ def init_layouts():
 def init_widgets():
     return [widget.GroupBox(fontsize=8),
             widget.Prompt(),
-            widget.WindowName(background="333333"),
+            widget.WindowTabs(background="333333"),
             widget.Systray(),
             widget.Notify(),
             widget.Battery(update_delay=5),
