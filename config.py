@@ -37,7 +37,7 @@ def init_keys():
             Key([mod], "k", lazy.layout.down()),
 
             Key([mod], "r", lazy.spawncmd()),
-            Key([mod], "w", lazy.window.kill()),
+            Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod], "Return", lazy.spawn("gnome-terminal")),
             Key([mod], "l", lazy.spawn("i3lock -d -c000000")),
             Key([mod, "control"], "r", lazy.restart())]
