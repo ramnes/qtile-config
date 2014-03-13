@@ -66,7 +66,7 @@ def init_widgets():
             widget.Systray(),
             widget.Notify(),
             widget.Battery(update_delay=5),
-            widget.Clock("(⌚%a|⌚%d-%m-%Y|⌚%I:%M)")]
+            widget.Clock("⌚ %a %d-%m-%Y %I:%M")]
 
 
 def init_top_bar():
