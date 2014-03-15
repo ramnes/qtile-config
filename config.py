@@ -64,9 +64,9 @@ def init_widgets():
             widget.Prompt(),
             widget.WindowTabs(background="333333"),
             widget.Systray(),
-            widget.Notify(),
+            widget.TextBox(text=" ↯"),
             widget.Battery(update_delay=5),
-            widget.Clock("⌚ %a %d-%m-%Y %I:%M")]
+            widget.Clock(fmt="⌚ %a %d-%m-%Y %H:%M")]
 
 
 def init_top_bar():
@@ -81,7 +81,7 @@ def init_widgets_defaults():
     return dict(font="DejaVu Sans",
                 fontsize=12,
                 padding=3,
-                background="#222222")
+                background="222222")
 
 
 @hook.subscribe.client_new
