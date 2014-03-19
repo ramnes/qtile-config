@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+import socket
+
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
@@ -60,8 +62,9 @@ def init_layouts():
 
 
 def init_widgets():
+    prompt = "{0}@{1}$ ".format(os.environ["USER"], socket.gethostname())
     return [widget.GroupBox(fontsize=8),
-            widget.Prompt(),
+            widget.Prompt(prompt=prompt),
             widget.WindowTabs(background="333333"),
             widget.Systray(),
             widget.TextBox(text=" ↯"),
