@@ -38,7 +38,7 @@ def init_keys():
             Key([mod], "j", lazy.layout.up()),
             Key([mod], "k", lazy.layout.down()),
 
-            Key([mod], "r", lazy.spawncmd()),
+            Key([mod], "r", lazy.spawncmd("cmd")),
             Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod], "Return", lazy.spawn("gnome-terminal")),
             Key([mod], "l", lazy.spawn("i3lock -d -c000000")),
@@ -62,7 +62,9 @@ def init_layouts():
 
 
 def init_widgets():
-    prompt = "{0}@{1}$ ".format(os.environ["USER"], socket.gethostname())
+    prompt = "{user}@{host}:".format(user=os.environ["USER"],
+                                    host=socket.gethostname())
+    prompt += "{prompt}: "
     return [widget.GroupBox(fontsize=8),
             widget.Prompt(prompt=prompt),
             widget.WindowTabs(background="333333"),
