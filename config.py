@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import socket
 
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
@@ -9,14 +8,16 @@ from libqtile import layout, bar, widget, hook
 
 @lazy.function
 def window_to_prev_group(qtile):
-    i = qtile.groups.index(qtile.currentGroup)
-    qtile.currentWindow.togroup(qtile.groups[i - 1].name)
+    if qtile.currentWindow is not None:
+        i = qtile.groups.index(qtile.currentGroup)
+        qtile.currentWindow.togroup(qtile.groups[i - 1].name)
 
 
 @lazy.function
 def window_to_next_group(qtile):
-    i = qtile.groups.index(qtile.currentGroup)
-    qtile.currentWindow.togroup(qtile.groups[i + 1].name)
+    if qtile.currentWindow is not None:
+        i = qtile.groups.index(qtile.currentGroup)
+        qtile.currentWindow.togroup(qtile.groups[i + 1].name)
 
 
 def init_keys():
@@ -44,6 +45,11 @@ def init_keys():
             Key([mod], "l", lazy.spawn("i3lock -d -c000000")),
             Key([mod, "control"], "r", lazy.restart())]
 
+def init_colors():
+    return ["c52929",
+            "ded401",
+            "555555",
+            "282828"]
 
 def init_groups():
     groups = []
@@ -62,20 +68,23 @@ def init_layouts():
 
 
 def init_widgets():
-    prompt = "{user}@{host}:".format(user=os.environ["USER"],
-                                    host=socket.gethostname())
-    prompt += "{prompt}: "
-    return [widget.GroupBox(fontsize=8),
-            widget.Prompt(prompt=prompt),
-            widget.WindowTabs(background="333333"),
+    return [widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
+                            this_current_screen_border=colors[0]),
+            widget.Prompt(prompt=" ", font="DejaVu Bold",
+                          background=colors[1], foreground=colors[3]),
+            widget.TaskList(borderwidth=1, border=colors[0],
+                            urgent_border=colors[1]),
             widget.Systray(),
-            widget.TextBox(text=" ↯"),
+            widget.TextBox(text=" (", foreground=colors[0]),
+            widget.TextBox(text="↯", foreground=colors[1]),
             widget.Battery(update_delay=5),
-            widget.Clock(fmt="⌚ %a %d-%m-%Y %H:%M")]
-
+            widget.TextBox(text="|", foreground=colors[0]),
+            widget.TextBox(text="⌚", foreground=colors[1]),
+            widget.Clock(fmt="%a %d-%m-%Y %H:%M"),
+            widget.TextBox(text=") ", foreground=colors[0])]
 
 def init_top_bar():
-    return bar.Bar(widgets=init_widgets(), size=22)
+    return bar.Bar(widgets=init_widgets(), size=25)
 
 
 def init_screens():
@@ -83,10 +92,10 @@ def init_screens():
 
 
 def init_widgets_defaults():
-    return dict(font="DejaVu Sans",
+    return dict(font="DejaVu",
                 fontsize=12,
-                padding=3,
-                background="222222")
+                padding=2,
+                background=colors[3])
 
 
 @hook.subscribe.client_new
@@ -99,6 +108,7 @@ def floating_dialogs(window):
 
 if __name__ == "config":
     mod = "mod4"
+    colors = init_colors()
     keys = init_keys()
     groups = init_groups()
     layouts = init_layouts()
