@@ -22,6 +22,8 @@ def window_to_next_group(qtile):
 
 
 def init_keys():
+    lock = "i3lock -d -c000000"
+    term = "gnome-terminal"
     return [Key([mod, "control"], "j", lazy.layout.shuffle_up()),
             Key([mod, "control"], "k", lazy.layout.shuffle_down()),
 
@@ -42,8 +44,8 @@ def init_keys():
 
             Key([mod], "r", lazy.spawncmd()),
             Key([mod, "shift"], "c", lazy.window.kill()),
-            Key([mod], "Return", lazy.spawn("gnome-terminal")),
-            Key([mod], "l", lazy.spawn("i3lock -d -c000000")),
+            Key([mod], "Return", lazy.spawn(term)),
+            Key([mod], "l", lazy.spawn(lock)),
             Key([mod, "control"], "r", lazy.restart())]
 
 
@@ -131,4 +133,3 @@ if __name__ == "config":
     layouts = init_layouts()
     screens = init_screens()
     widget_defaults = init_widgets_defaults()
-    os.system("feh --bg-scale ~/.background.jpg")

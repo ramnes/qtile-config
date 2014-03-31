@@ -1,13 +1,12 @@
 qtile-config
 ============
 
-My Qtile 0.5+ configuration, built for AwesomeWM habits.
+My Qtile 0.6+ configuration, built for AwesomeWM habits.
 
 Dependencies
 ------------
 * `Qtile`: https://github.com/qtile/qtile
 * `Python 2.7`
-* `feh` and a `.background.jpg` in your `~`
 
 Install
 -------
