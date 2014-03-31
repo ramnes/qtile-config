@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import socket
 
 from libqtile.config import Key, Screen, Group
 from libqtile.command import lazy
@@ -39,17 +40,19 @@ def init_keys():
             Key([mod], "j", lazy.layout.up()),
             Key([mod], "k", lazy.layout.down()),
 
-            Key([mod], "r", lazy.spawncmd("cmd")),
+            Key([mod], "r", lazy.spawncmd()),
             Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod], "Return", lazy.spawn("gnome-terminal")),
             Key([mod], "l", lazy.spawn("i3lock -d -c000000")),
             Key([mod, "control"], "r", lazy.restart())]
 
+
 def init_colors():
     return ["c52929",
             "ded401",
-            "555555",
+            "3a3a3a",
             "282828"]
+
 
 def init_groups():
     groups = []
@@ -68,20 +71,34 @@ def init_layouts():
 
 
 def init_widgets():
-    return [widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
-                            this_current_screen_border=colors[0]),
-            widget.Prompt(prompt=" ", font="DejaVu Bold",
-                          background=colors[1], foreground=colors[3]),
-            widget.TaskList(borderwidth=1, border=colors[0],
-                            urgent_border=colors[1]),
+    prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+    return [widget.Prompt(prompt=prompt, font="DejaVu Sans Mono",
+                    padding=10, background=colors[2]),
+
+            widget.TextBox(text="◤ ", fontsize=45, padding=-8,
+                    foreground=colors[2], background=colors[3]),
+
+            widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
+                    this_current_screen_border=colors[0]),
+
+            widget.TextBox(text="◤", fontsize=45, padding=-1,
+                    foreground=colors[3], background=colors[2]),
+
+            widget.TaskList(borderwidth=1, background=colors[2],
+                    border=colors[0], urgent_border=colors[1]),
+
+            widget.TextBox(text="◤", fontsize=45, padding=-1,
+                    foreground=colors[2], background=colors[3]),
+
             widget.Systray(),
             widget.TextBox(text=" (", foreground=colors[0]),
-            widget.TextBox(text="↯", foreground=colors[1]),
+            widget.TextBox(text="↯", foreground=colors[1], fontsize=14),
             widget.Battery(update_delay=5),
             widget.TextBox(text="|", foreground=colors[0]),
-            widget.TextBox(text="⌚", foreground=colors[1]),
+            widget.TextBox(text="⌚", foreground=colors[1], fontsize=18),
             widget.Clock(fmt="%a %d-%m-%Y %H:%M"),
             widget.TextBox(text=") ", foreground=colors[0])]
+
 
 def init_top_bar():
     return bar.Bar(widgets=init_widgets(), size=25)
