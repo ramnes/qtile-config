@@ -22,12 +22,7 @@ def window_to_next_group(qtile):
 
 
 def init_keys():
-    lock = "i3lock -d -c000000"
-    term = "gnome-terminal"
-    return [Key([mod, "control"], "j", lazy.layout.shuffle_up()),
-            Key([mod, "control"], "k", lazy.layout.shuffle_down()),
-
-            Key([mod], "Left", lazy.screen.prevgroup()),
+    return [Key([mod], "Left", lazy.screen.prevgroup()),
             Key([mod], "Right", lazy.screen.nextgroup()),
 
             Key([mod, "shift"], "Left", window_to_prev_group),
@@ -57,13 +52,11 @@ def init_colors():
 
 
 def init_groups():
-    groups = []
-    for i in range(1, 10):
-        name = str(i)
-        groups.append(Group(name))
-        keys.append(Key([mod], name, lazy.group[name].toscreen()))
-        keys.append(Key([mod, "shift"], name, lazy.window.togroup(name)))
-    return groups
+    def _inner(number):
+        keys.append(Key([mod], number, lazy.group[number].toscreen()))
+        keys.append(Key([mod, "shift"], number, lazy.window.togroup(number)))
+        return Group(number)
+    return [_inner(str(i)) for i in range(1, 10)]
 
 
 def init_layouts():
@@ -125,8 +118,11 @@ def floating_dialogs(window):
         window.floating = True
 
 
-if __name__ == "config":
+if __name__ in ["config", "__main__"]:
     mod = "mod4"
+    lock = "i3lock -d -c000000"
+    term = "gnome-terminal"
+
     colors = init_colors()
     keys = init_keys()
     groups = init_groups()
