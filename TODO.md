@@ -1,9 +1,6 @@
 TODO
 ====
 
-* better window widget
-* launch apps at startup
-* current layout widget
-* better topbar colors
-* applets
+* window widget that resize windows names if full
+* current layout icon widget
 * mouse? (not sure if needed)
