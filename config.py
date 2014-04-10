@@ -41,7 +41,9 @@ def init_keys():
             Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod], "Return", lazy.spawn(term)),
             Key([mod], "l", lazy.spawn(lock)),
-            Key([mod, "control"], "r", lazy.restart())]
+
+            Key([mod, "control"], "r", lazy.restart()),
+            Key([mod, "control"], "q", lazy.shutdown())]
 
 
 def init_colors():
