@@ -2,7 +2,7 @@
 import os
 import socket
 
-from libqtile.config import Key, Screen, Group
+from libqtile.config import Key, Screen, Group, Drag
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
@@ -36,6 +36,7 @@ def init_keys():
 
             Key([mod], "j", lazy.layout.up()),
             Key([mod], "k", lazy.layout.down()),
+            Key([mod], "f", lazy.window.toggle_floating()),
 
             Key([mod], "r", lazy.spawncmd()),
             Key([mod, "shift"], "c", lazy.window.kill()),
@@ -44,6 +45,13 @@ def init_keys():
 
             Key([mod, "control"], "r", lazy.restart()),
             Key([mod, "control"], "q", lazy.shutdown())]
+
+
+def init_mouse():
+    return [Drag([mod], "Button1", lazy.window.set_position_floating(),
+                 start=lazy.window.get_position()),
+            Drag([mod], "Button3", lazy.window.set_size_floating(),
+                 start=lazy.window.get_size())]
 
 
 def init_colors():
@@ -98,7 +106,7 @@ def init_widgets():
 
 
 def init_top_bar():
-    return bar.Bar(widgets=init_widgets(), size=25)
+    return bar.Bar(widgets=init_widgets(), size=24)
 
 
 def init_screens():
@@ -107,16 +115,15 @@ def init_screens():
 
 def init_widgets_defaults():
     return dict(font="DejaVu",
-                fontsize=12,
+                fontsize=11,
                 padding=2,
                 background=colors[3])
 
 
 @hook.subscribe.client_new
-def floating_dialogs(window):
-    dialog = window.window.get_wm_type() == 'dialog'
-    transient = window.window.get_wm_transient_for()
-    if dialog or transient:
+def floating(window):
+    floating_types = ['notification', 'toolbar', 'splash', 'dialog']
+    if window.window.get_wm_type() in floating_types:
         window.floating = True
 
 
@@ -127,6 +134,7 @@ if __name__ in ["config", "__main__"]:
 
     colors = init_colors()
     keys = init_keys()
+    mouse = init_mouse()
     groups = init_groups()
     layouts = init_layouts()
     screens = init_screens()
