@@ -55,10 +55,10 @@ def init_mouse():
 
 
 def init_colors():
-    return ["c52929",
-            "ded401",
-            "3a3a3a",
-            "282828"]
+    return ["#c52929",
+            "#ded401",
+            "#3a3a3a",
+            "#282828"]
 
 
 def init_groups():
@@ -71,7 +71,7 @@ def init_groups():
 
 def init_layouts():
     return [layout.Max(),
-            layout.Tile(ratio=0.5),
+            layout.Tile(ratio=0.5, border_focus=colors[0]),
             layout.Floating()]
 
 
