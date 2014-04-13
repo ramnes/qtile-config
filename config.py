@@ -39,12 +39,12 @@ def init_keys():
             Key([mod], "f", lazy.window.toggle_floating()),
 
             Key([mod], "r", lazy.spawncmd()),
-            Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod], "Return", lazy.spawn(term)),
             Key([mod], "l", lazy.spawn(lock)),
 
-            Key([mod, "control"], "r", lazy.restart()),
-            Key([mod, "control"], "q", lazy.shutdown())]
+            Key([mod, "shift"], "c", lazy.window.kill()),
+            Key([mod, "shift"], "r", lazy.restart()),
+            Key([mod, "shift"], "q", lazy.shutdown())]
 
 
 def init_mouse():
