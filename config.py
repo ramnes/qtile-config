@@ -55,10 +55,10 @@ def init_mouse():
 
 
 def init_colors():
-    return ["#c52929",
-            "#ded401",
-            "#3a3a3a",
-            "#282828"]
+    return ["#00acf0", # cyan (darker)
+            "#7cfcff", # cyan
+            "#424345", # grey
+            "#111113"] # grey (darker)
 
 
 def init_groups():
@@ -69,10 +69,14 @@ def init_groups():
     return [_inner(str(i)) for i in range(1, 10)]
 
 
+def init_floating_layout():
+    return layout.Floating(border_focus=colors[0])
+
+
 def init_layouts():
     return [layout.Max(),
-            layout.Tile(ratio=0.5, border_focus=colors[0]),
-            layout.Floating()]
+            layout.Tile(ratio=0.5, border_focus=colors[1]),
+            floating_layout]
 
 
 def init_widgets():
@@ -92,21 +96,20 @@ def init_widgets():
             widget.TaskList(borderwidth=1, background=colors[2],
                     border=colors[0], urgent_border=colors[1]),
 
+            widget.Systray(background=colors[2]),
+
             widget.TextBox(text="◤", fontsize=45, padding=-1,
                     foreground=colors[2], background=colors[3]),
 
-            widget.Systray(),
-            widget.TextBox(text=" (", foreground=colors[0]),
-            widget.TextBox(text="↯", foreground=colors[1], fontsize=14),
+            widget.TextBox(text=" ↯", foreground=colors[1], fontsize=14),
             widget.Battery(update_delay=5),
-            widget.TextBox(text="|", foreground=colors[0]),
-            widget.TextBox(text="⌚", foreground=colors[1], fontsize=18),
-            widget.Clock(fmt="%a %d-%m-%Y %H:%M"),
-            widget.TextBox(text=") ", foreground=colors[0])]
+
+            widget.TextBox(text=" ⌚", foreground=colors[1], fontsize=18),
+            widget.Clock(fmt="%a %d-%m-%Y %H:%M")]
 
 
 def init_top_bar():
-    return bar.Bar(widgets=init_widgets(), size=24)
+    return bar.Bar(widgets=init_widgets(), size=25)
 
 
 def init_screens():
@@ -136,6 +139,7 @@ if __name__ in ["config", "__main__"]:
     keys = init_keys()
     mouse = init_mouse()
     groups = init_groups()
+    floating_layout = init_floating_layout()
     layouts = init_layouts()
     screens = init_screens()
     widget_defaults = init_widgets_defaults()
