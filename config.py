@@ -28,8 +28,8 @@ def init_keys():
             Key([mod, "shift"], "Left", window_to_prev_group),
             Key([mod, "shift"], "Right", window_to_next_group),
 
-            Key([mod], "Tab", lazy.layout.previous()),
-            Key([mod, "shift"], "Tab", lazy.layout.next()),
+            Key([mod], "Tab", lazy.group.next_window()),
+            Key([mod, "shift"], "Tab", lazy.group.prev_window()),
 
             Key([mod], "space", lazy.nextlayout()),
             Key([mod, "shift"], "space", lazy.prevlayout()),
