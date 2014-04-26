@@ -7,6 +7,9 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
 
 
+DEBUG = os.environ.get("DEBUG")
+
+
 @lazy.function
 def window_to_prev_group(qtile):
     if qtile.currentWindow is not None:
@@ -22,7 +25,7 @@ def window_to_next_group(qtile):
 
 
 def init_keys():
-    return [Key([mod], "Left", lazy.screen.prevgroup()),
+    keys = [Key([mod], "Left", lazy.screen.prevgroup()),
             Key([mod], "Right", lazy.screen.nextgroup()),
 
             Key([mod, "shift"], "Left", window_to_prev_group),
@@ -45,6 +48,10 @@ def init_keys():
             Key([mod, "shift"], "c", lazy.window.kill()),
             Key([mod, "shift"], "r", lazy.restart()),
             Key([mod, "shift"], "q", lazy.shutdown())]
+    if DEBUG:
+        keys += [Key(["mod1"], "Tab", lazy.layout.next()),
+                 Key(["mod1", "shift"], "Tab", lazy.layout.previous())]
+    return keys
 
 
 def init_mouse():
@@ -81,31 +88,34 @@ def init_layouts():
 
 def init_widgets():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-    return [widget.Prompt(prompt=prompt, font="DejaVu Sans Mono",
-                    padding=10, background=colors[2]),
+    widgets = [widget.Prompt(prompt=prompt, font="DejaVu Sans Mono",
+                        padding=10, background=colors[2]),
 
-            widget.TextBox(text="◤ ", fontsize=45, padding=-8,
-                    foreground=colors[2], background=colors[3]),
+               widget.TextBox(text="◤ ", fontsize=45, padding=-8,
+                        foreground=colors[2], background=colors[3]),
 
-            widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
-                    this_current_screen_border=colors[0]),
+               widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
+                        this_current_screen_border=colors[0]),
 
-            widget.TextBox(text="◤", fontsize=45, padding=-1,
-                    foreground=colors[3], background=colors[2]),
+               widget.TextBox(text="◤", fontsize=45, padding=-1,
+                        foreground=colors[3], background=colors[2]),
 
-            widget.TaskList(borderwidth=1, background=colors[2],
-                    border=colors[0], urgent_border=colors[1]),
+               widget.TaskList(borderwidth=1, background=colors[2],
+                        border=colors[0], urgent_border=colors[1]),
 
-            widget.Systray(background=colors[2]),
+               widget.Systray(background=colors[2]),
 
-            widget.TextBox(text="◤", fontsize=45, padding=-1,
-                    foreground=colors[2], background=colors[3]),
+               widget.TextBox(text="◤", fontsize=45, padding=-1,
+                        foreground=colors[2], background=colors[3]),
 
-            widget.TextBox(text=" ↯", foreground=colors[1], fontsize=14),
-            widget.Battery(update_delay=5),
+               widget.TextBox(text=" ↯", foreground=colors[1], fontsize=14),
+               widget.Battery(update_delay=5),
 
-            widget.TextBox(text=" ⌚", foreground=colors[1], fontsize=18),
-            widget.Clock(fmt="%a %d-%m-%Y %H:%M")]
+               widget.TextBox(text=" ⌚", foreground=colors[1], fontsize=18),
+               widget.Clock(fmt="%a %d-%m-%Y %H:%M")]
+    if DEBUG:
+        widgets += [widget.Sep(), widget.CurrentLayout()]
+    return widgets
 
 
 def init_top_bar():
@@ -126,7 +136,8 @@ def init_widgets_defaults():
 @hook.subscribe.client_new
 def floating(window):
     floating_types = ['notification', 'toolbar', 'splash', 'dialog']
-    if window.window.get_wm_type() in floating_types:
+    transient = window.window.get_wm_transient_for()
+    if window.window.get_wm_type() in floating_types or transient:
         window.floating = True
 
 
@@ -143,3 +154,11 @@ if __name__ in ["config", "__main__"]:
     layouts = init_layouts()
     screens = init_screens()
     widget_defaults = init_widgets_defaults()
+
+    if DEBUG:
+        layouts += [
+            layout.Stack(), layout.Zoomy(), layout.Matrix(), layout.TreeTab(),
+            layout.MonadTall(), layout.RatioTile(),
+            layout.Slice('left', 192, name='slice-test', role='gnome-terminal',
+                         fallback=layout.Slice('right', 256, role='gimp-dock',
+                                            fallback=layout.Stack(stacks=1)))]
