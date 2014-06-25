@@ -62,10 +62,9 @@ def init_mouse():
 
 
 def init_colors():
-    return ["#00acf0", # cyan (darker)
-            "#7cfcff", # cyan
-            "#424345", # grey
-            "#111113"] # grey (darker)
+    return [["7cfcff", "#00afff"], # cyan gradiant
+            ["#323335", "#525355"], # grey gradiant
+            ["#040404", "#111113"]] # darker grey gradiant
 
 
 def init_groups():
@@ -89,29 +88,29 @@ def init_layouts():
 def init_widgets():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets = [widget.Prompt(prompt=prompt, font="DejaVu Sans Mono",
-                        padding=10, background=colors[2]),
+                             padding=10, background=colors[1]),
 
                widget.TextBox(text="◤ ", fontsize=45, padding=-8,
-                        foreground=colors[2], background=colors[3]),
+                              foreground=colors[1], background=colors[2]),
 
                widget.GroupBox(fontsize=8, padding=4, borderwidth=1,
-                        this_current_screen_border=colors[0]),
+                               this_current_screen_border=colors[0]),
 
                widget.TextBox(text="◤", fontsize=45, padding=-1,
-                        foreground=colors[3], background=colors[2]),
+                              foreground=colors[2], background=colors[1]),
 
-               widget.TaskList(borderwidth=1, background=colors[2],
-                        border=colors[0], urgent_border=colors[1]),
+               widget.TaskList(borderwidth=1, background=colors[1],
+                               border=colors[0], urgent_border=colors[0]),
 
-               widget.Systray(background=colors[2]),
+               widget.Systray(background=colors[1]),
 
                widget.TextBox(text="◤", fontsize=45, padding=-1,
-                        foreground=colors[2], background=colors[3]),
+                              foreground=colors[1], background=colors[2]),
 
-               widget.TextBox(text=" ↯", foreground=colors[1], fontsize=14),
+               widget.TextBox(text=" ↯", foreground=colors[0], fontsize=14),
                widget.Battery(update_delay=5),
 
-               widget.TextBox(text=" ⌚", foreground=colors[1], fontsize=18),
+               widget.TextBox(text=" ⌚", foreground=colors[0], fontsize=18),
                widget.Clock(fmt="%a %d-%m-%Y %H:%M")]
     if DEBUG:
         widgets += [widget.Sep(), widget.CurrentLayout()]
@@ -119,7 +118,7 @@ def init_widgets():
 
 
 def init_top_bar():
-    return bar.Bar(widgets=init_widgets(), size=25)
+    return bar.Bar(widgets=init_widgets(), size=25, opacity=0.96)
 
 
 def init_screens():
@@ -130,7 +129,7 @@ def init_widgets_defaults():
     return dict(font="DejaVu",
                 fontsize=11,
                 padding=2,
-                background=colors[3])
+                background=colors[2])
 
 
 @hook.subscribe.client_new
