@@ -76,12 +76,12 @@ def init_groups():
 
 
 def init_floating_layout():
-    return layout.Floating(border_focus=colors["#7cfcff"])
+    return layout.Floating(border_focus="#7cfcff")
 
 
 def init_layouts():
     return [layout.Max(),
-            layout.Tile(ratio=0.5, border_focus=colors["#00afff"]),
+            layout.Tile(ratio=0.5, border_focus="#00afff"),
             floating_layout]
 
 
