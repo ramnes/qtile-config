@@ -25,29 +25,42 @@ def window_to_next_group(qtile):
 
 
 def init_keys():
-    keys = [Key([mod], "Left", lazy.screen.prevgroup()),
-            Key([mod], "Right", lazy.screen.nextgroup()),
+    keys = [
+        Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
+        Key([mod], "Right", lazy.screen.next_group(skip_managed=True)),
 
-            Key([mod, "shift"], "Left", window_to_prev_group),
-            Key([mod, "shift"], "Right", window_to_next_group),
+        Key([mod, "shift"], "Left", window_to_prev_group),
+        Key([mod, "shift"], "Right", window_to_next_group),
 
-            Key([mod], "Tab", lazy.group.next_window()),
-            Key([mod, "shift"], "Tab", lazy.group.prev_window()),
+        Key([mod, "mod1"], "Left", lazy.to_screen(0)),
+        Key([mod, "mod1"], "Right", lazy.to_screen(1)),
 
-            Key([mod], "space", lazy.nextlayout()),
-            Key([mod, "shift"], "space", lazy.prevlayout()),
+        Key([mod], "Up", lazy.group.next_window()),
+        Key([mod], "Down", lazy.group.prev_window()),
 
-            Key([mod], "j", lazy.layout.up()),
-            Key([mod], "k", lazy.layout.down()),
-            Key([mod], "f", lazy.window.toggle_floating()),
+        Key([mod], "space", lazy.next_layout()),
 
-            Key([mod], "r", lazy.spawncmd()),
-            Key([mod], "Return", lazy.spawn(term)),
-            Key([mod], "l", lazy.spawn(lock)),
+        Key([mod], "j", lazy.layout.up()),
+        Key([mod], "k", lazy.layout.down()),
 
-            Key([mod, "shift"], "c", lazy.window.kill()),
-            Key([mod, "shift"], "r", lazy.restart()),
-            Key([mod, "shift"], "q", lazy.shutdown())]
+        Key([mod], "f", lazy.window.toggle_floating()),
+
+        Key([mod], "r", lazy.spawncmd()),
+        Key([mod], "Return", lazy.spawn(term)),
+        Key([mod], "BackSpace", lazy.window.kill()),
+
+        Key([mod, "shift"], "r", lazy.restart()),
+        Key([mod, "shift"], "q", lazy.shutdown()),
+
+        Key([], "Print", lazy.spawn("/home/gg/.local/bin/screenshot")),
+        Key([], "Scroll_Lock", lazy.spawn("i3lock -d -c000000")),
+        Key([mod], "Home", lazy.spawn("amixer set Master toggle")),
+        Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
+        Key([mod], "Next", lazy.spawn("amixer set Master 5-")),
+        Key([mod], "Insert", lazy.spawn("/home/gg/.local/bin/spotify-dbus playpause")),
+        Key([mod], "End", lazy.spawn("/home/gg/.local/bin/spotify-dbus next")),
+        Key([mod], "Delete", lazy.spawn("/home/gg/.local/bin/spotify-dbus previous")),
+    ]
     if DEBUG:
         keys += [Key(["mod1"], "Tab", lazy.layout.next()),
                  Key(["mod1", "shift"], "Tab", lazy.layout.previous())]
@@ -62,9 +75,9 @@ def init_mouse():
 
 
 def init_colors():
-    return [["#7cfcff", "#00afff"], # cyan gradiant
-            ["#323335", "#525355"], # grey gradiant
-            ["#040404", "#111113"]] # darker grey gradiant
+    return [["#7cfcff", "#00afff"],  # cyan gradiant
+            ["#323335", "#525355"],  # grey gradiant
+            ["#040404", "#111113"]]  # darker grey gradiant
 
 
 def init_groups():
