@@ -5,8 +5,8 @@ import socket
 from libqtile import bar, hook, layout
 from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
-from libqtile.widget import (Clock, CurrentLayout, GroupBox, Prompt, Sep,
-                             Systray, TaskList, TextBox)
+from libqtile.widget import (Battery, Clock, CurrentLayout, GroupBox, Prompt,
+                             Sep, Systray, TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
 
@@ -169,8 +169,14 @@ def init_widgets():
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=colors[1], background=colors[2]),
 
+        TextBox(text=" ⌚", foreground=colors[0], fontsize=18),
         Clock(format="%a %d-%m-%Y %H:%M"),
     ]
+    if hostname == "spud":
+        widgets[-2:-2] = [
+            TextBox(text=" ↯", foreground=colors[0], fontsize=14),
+            Battery(update_delay=5)
+        ]
     if DEBUG:
         widgets += [Sep(), CurrentLayout()]
     return widgets
