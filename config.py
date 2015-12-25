@@ -87,6 +87,7 @@ def init_keys():
         Key([mod], "f", lazy.window.toggle_floating()),
 
         Key([mod], "r", lazy.spawncmd()),
+        Key([mod], "u", lazy.spawn(browser)),
         Key([mod], "Return", lazy.spawn(term)),
         Key([mod], "BackSpace", lazy.window.kill()),
 
@@ -200,6 +201,7 @@ def floating(window):
 
 if __name__ in ["config", "__main__"]:
     mod = "mod4"
+    browser = "uzbl-browser"
     term = "terminator"
     margin = 8
     num_screens = 1
