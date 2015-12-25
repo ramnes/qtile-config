@@ -140,7 +140,7 @@ def init_floating_layout():
 
 def init_layouts():
     return [layout.Max(),
-            layout.Tile(ratio=0.5, margin=8, border_width=1,
+            layout.Tile(ratio=0.5, margin=margin, border_width=1,
                         border_normal="#111111", border_focus=colors[0])]
 
 
@@ -181,7 +181,7 @@ def init_top_bar():
 
 def init_screens():
     screens = [Screen(top=init_top_bar())]
-    if hostname in ["diodon", "sickboy"]:
+    for _ in range(num_screens - 1):
         screens.insert(0, Screen())
     return screens
 
@@ -201,8 +201,16 @@ def floating(window):
 if __name__ in ["config", "__main__"]:
     mod = "mod4"
     term = "terminator"
+    margin = 8
+    num_screens = 1
     hostname = socket.gethostname()
     cursor_warp = True
+
+    if hostname == "spud":
+        term = "gnome-terminal"
+        margin = 0
+    if hostname == "sickboy":
+        num_screens = 2
 
     colors = init_colors()
     keys = init_keys()
