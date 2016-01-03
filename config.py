@@ -94,7 +94,7 @@ def init_keys():
         Key([mod, "shift"], "r", lazy.restart()),
         Key([mod, "shift"], "q", lazy.shutdown()),
 
-        Key([], "Print", lazy.spawn("/home/ramnes/.local/bin/screenshot")),
+        Key([], "Print", lazy.spawn("scrot")),
         Key([], "Scroll_Lock", lazy.spawn("/home/ramnes/.local/bin/i3lock -d")),
         Key([mod], "Delete", lazy.spawn("amixer set Master toggle")),
         Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
