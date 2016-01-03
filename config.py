@@ -173,7 +173,7 @@ def init_widgets():
         Notify(),
 
         TextBox(text=" ⌚", foreground=colors[0], fontsize=18),
-        Clock(format="%a %d-%m-%Y %H:%M"),
+        Clock(format="%A %d-%m-%Y %H:%M"),
     ]
     if hostname == "spud":
         widgets[-2:-2] = [
