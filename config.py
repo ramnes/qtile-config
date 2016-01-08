@@ -88,7 +88,7 @@ def init_keys():
 
         Key([mod], "r", lazy.spawncmd()),
         Key([mod], "u", lazy.spawn(browser)),
-        Key([mod], "Return", lazy.spawn(term)),
+        Key([mod], "Return", lazy.spawn(terminal)),
         Key([mod], "BackSpace", lazy.window.kill()),
 
         Key([mod, "shift"], "r", lazy.restart()),
@@ -211,14 +211,14 @@ def floating(window):
 if __name__ in ["config", "__main__"]:
     mod = "mod4"
     browser = "uzbl-browser"
-    term = "terminator"
+    terminal = "terminator"
     margin = 8
     num_screens = 1
     hostname = socket.gethostname()
     cursor_warp = True
 
     if hostname == "spud":
-        term = "gnome-terminal"
+        terminal = "gnome-terminal"
         margin = 0
     if hostname == "sickboy":
         num_screens = 2
