@@ -220,6 +220,8 @@ if __name__ in ["config", "__main__"]:
     if hostname == "spud":
         terminal = "gnome-terminal"
         margin = 0
+    if hostname == "saiga":
+        num_screens = 2
     if hostname == "sickboy":
         num_screens = 2
 
