@@ -201,11 +201,18 @@ def init_widgets_defaults():
 
 
 @hook.subscribe.client_new
-def floating(window):
-    floating_types = ['notification', 'toolbar', 'splash', 'dialog']
-    transient = window.window.get_wm_transient_for()
-    if window.window.get_wm_type() in floating_types or transient:
+def set_floating(window):
+    floating_types = ["notification", "toolbar", "splash", "dialog"]
+    floating_roles = ["EventDialog", "Msgcompose"]
+
+    if (window.window.get_wm_type() in floating_types or
+        window.window.get_wm_window_role() in floating_roles or
+        window.window.get_wm_transient_for()):
+
+        screen = window.qtile.find_closest_screen(window.x, window.y)
         window.floating = True
+        window.x = screen.width / 2 - window.width / 2
+        window.y = screen.height / 2 - window.height / 2
 
 
 if __name__ in ["config", "__main__"]:
