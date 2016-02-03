@@ -175,7 +175,7 @@ def init_widgets():
         TextBox(text=" ⌚", foreground=colors[0], fontsize=18),
         Clock(format="%A %d-%m-%Y %H:%M"),
     ]
-    if hostname == "spud":
+    if hostname in ("spud", "saiga"):
         widgets[-2:-2] = [
             TextBox(text=" ↯", foreground=colors[0], fontsize=14),
             Battery(update_delay=5)
