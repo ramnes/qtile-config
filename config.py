@@ -203,7 +203,7 @@ def init_widgets_defaults():
 @hook.subscribe.client_new
 def set_floating(window):
     floating_types = ["notification", "toolbar", "splash", "dialog"]
-    floating_roles = ["EventDialog", "Msgcompose"]
+    floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
 
     if (window.window.get_wm_type() in floating_types or
         window.window.get_wm_window_role() in floating_roles or
