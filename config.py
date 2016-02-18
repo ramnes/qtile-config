@@ -9,6 +9,7 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, GroupBox, Notify,
                              Prompt, Sep, Systray, TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
+HOME = "/home/ramnes/"
 
 
 def window_to_prev_group():
@@ -95,13 +96,13 @@ def init_keys():
         Key([mod, "shift"], "q", lazy.shutdown()),
 
         Key([], "Print", lazy.spawn("scrot")),
-        Key([], "Scroll_Lock", lazy.spawn("/home/ramnes/.local/bin/i3lock -d")),
+        Key([], "Scroll_Lock", lazy.spawn(HOME + ".local/bin/i3lock -d")),
         Key([mod], "Delete", lazy.spawn("amixer set Master toggle")),
         Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
         Key([mod], "Next", lazy.spawn("amixer set Master 5-")),
-        Key([mod], "Insert", lazy.spawn("/home/ramnes/.local/bin/spotify-dbus playpause")),
-        Key([mod], "End", lazy.spawn("/home/ramnes/.local/bin/spotify-dbus next")),
-        Key([mod], "Home", lazy.spawn("/home/ramnes/.local/bin/spotify-dbus previous")),
+        Key([mod], "Insert", lazy.spawn(HOME + ".local/bin/spotify-dbus playpause")),
+        Key([mod], "End", lazy.spawn(HOME + ".local/bin/spotify-dbus next")),
+        Key([mod], "Home", lazy.spawn(HOME + ".local/bin/spotify-dbus previous")),
     ]
     if DEBUG:
         keys += [Key(["mod1"], "Tab", lazy.layout.next()),
@@ -216,6 +217,9 @@ def set_floating(window):
 
 
 if __name__ in ["config", "__main__"]:
+    if HOME + ".local/bin" not in os.environ["PATH"]:
+        os.environ["PATH"] = HOME + ".local/bin:{}".format(os.environ["PATH"])
+
     mod = "mod4"
     browser = "uzbl-browser"
     terminal = "terminator"
