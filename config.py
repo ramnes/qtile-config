@@ -140,12 +140,6 @@ def init_floating_layout():
     return layout.Floating(border_focus=colors[0])
 
 
-def init_layouts():
-    return [layout.Max(),
-            layout.Tile(ratio=0.5, margin=margin, border_width=1,
-                        border_normal="#111111", border_focus=colors[0])]
-
-
 def init_widgets():
     prompt = "{0}@{1}: ".format(os.environ["USER"], hostname)
     widgets = [
@@ -190,13 +184,6 @@ def init_top_bar():
     return bar.Bar(widgets=init_widgets(), size=22, opacity=1)
 
 
-def init_screens():
-    screens = [Screen(top=init_top_bar())]
-    for _ in range(num_screens - 1):
-        screens.insert(0, Screen())
-    return screens
-
-
 def init_widgets_defaults():
     return dict(font="DejaVu", fontsize=11, padding=2, background=colors[2])
 
@@ -218,33 +205,46 @@ def set_floating(window):
         window.y = screen.height / 2 - window.height / 2
 
 
+def init_screens(num_screens):
+    for _ in range(num_screens - 1):
+        screens.insert(0, Screen())
+
+
+def init_layouts(num_screens):
+    margin = 0
+    if num_screens > 1:
+        margin = 8
+    layouts.extend([layout.Tile(ratio=0.5, margin=margin, border_width=1,
+                                border_normal="#111111", border_focus=colors[0])])
+
+
+# very hacky, much ugly
+def main(qtile):
+    num_screens = len(qtile.conn.pseudoscreens)
+    init_screens(num_screens)
+    init_layouts(num_screens)
+
+
 if __name__ in ["config", "__main__"]:
     if HOME + ".local/bin" not in os.environ["PATH"]:
         os.environ["PATH"] = HOME + ".local/bin:{}".format(os.environ["PATH"])
 
     mod = "mod4"
     browser = "uzbl-browser"
-    terminal = "terminator"
-    margin = 8
-    num_screens = 1
     hostname = socket.gethostname()
     cursor_warp = True
 
+    terminal = "terminator"
     if hostname == "spud":
         terminal = "gnome-terminal"
-        margin = 0
-    if hostname == "saiga":
-        num_screens = 2
-    if hostname == "sickboy":
-        num_screens = 2
 
     colors = init_colors()
     keys = init_keys()
     mouse = init_mouse()
     groups = init_groups()
     floating_layout = init_floating_layout()
-    layouts = init_layouts()
-    screens = init_screens()
+    layouts = [layout.Max()]
+    screens = [Screen(top=init_top_bar())]
     widget_defaults = init_widgets_defaults()
 
     if DEBUG:
