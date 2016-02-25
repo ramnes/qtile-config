@@ -231,12 +231,9 @@ if __name__ in ["config", "__main__"]:
 
     mod = "mod4"
     browser = "uzbl-browser"
+    terminal = "roxterm"
     hostname = socket.gethostname()
     cursor_warp = True
-
-    terminal = "terminator"
-    if hostname == "spud":
-        terminal = "gnome-terminal"
 
     colors = init_colors()
     keys = init_keys()
