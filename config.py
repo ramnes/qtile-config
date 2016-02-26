@@ -201,8 +201,8 @@ def set_floating(window):
 
         screen = window.qtile.find_closest_screen(window.x, window.y)
         window.floating = True
-        window.x = screen.width / 2 - window.width / 2
-        window.y = screen.height / 2 - window.height / 2
+        window.x = int(screen.width / 2 - window.width / 2)
+        window.y = int(screen.height / 2 - window.height / 2)
 
 
 def init_screens(num_screens):
