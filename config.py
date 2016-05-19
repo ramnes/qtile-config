@@ -230,7 +230,7 @@ if __name__ in ["config", "__main__"]:
         os.environ["PATH"] = HOME + ".local/bin:{}".format(os.environ["PATH"])
 
     mod = "mod4"
-    browser = "uzbl-browser"
+    browser = "chromium-browser"
     terminal = "roxterm"
     hostname = socket.gethostname()
     cursor_warp = True
