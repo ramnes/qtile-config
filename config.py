@@ -173,7 +173,7 @@ def init_widgets():
     if hostname in ("spud", "saiga"):
         widgets[-2:-2] = [
             TextBox(text=" ↯", foreground=colors[0], fontsize=14),
-            Battery(update_delay=5)
+            Battery(update_delay=2)
         ]
     if DEBUG:
         widgets += [Sep(), CurrentLayout()]
