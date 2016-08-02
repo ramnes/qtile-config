@@ -198,10 +198,7 @@ def set_floating(window):
         or window.window.get_wm_window_role() in floating_roles
         or window.window.get_name() in floating_names
         or window.window.get_wm_transient_for()):
-        screen = window.qtile.find_closest_screen(window.x, window.y)
         window.floating = True
-        window.x = int(screen.width / 2 - window.width / 2)
-        window.y = int(screen.height / 2 - window.height / 2)
 
 
 def init_screens(num_screens):
