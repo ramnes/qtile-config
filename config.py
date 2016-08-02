@@ -194,11 +194,10 @@ def set_floating(window):
     floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
     floating_names = ["Terminator Preferences"]
 
-    if (window.window.get_wm_type() in floating_types or
-        window.window.get_wm_window_role() in floating_roles or
-        window.window.get_name() in floating_names or
-        window.window.get_wm_transient_for()):
-
+    if (window.window.get_wm_type() in floating_types
+        or window.window.get_wm_window_role() in floating_roles
+        or window.window.get_name() in floating_names
+        or window.window.get_wm_transient_for()):
         screen = window.qtile.find_closest_screen(window.x, window.y)
         window.floating = True
         window.x = int(screen.width / 2 - window.width / 2)
