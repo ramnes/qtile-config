@@ -75,7 +75,7 @@ def init_keys():
         Key([mod, "shift", "mod1"], "Left", window_to_prev_screen()),
         Key([mod, "shift", "mod1"], "Right", window_to_next_screen()),
 
-        Key([mod], "s", switch_screens()),
+        Key([mod], "t", switch_screens()),
 
         Key([mod], "Up", lazy.group.next_window()),
         Key([mod], "Down", lazy.group.prev_window()),
