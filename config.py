@@ -148,6 +148,7 @@ def init_widgets():
 
         TextBox(text="◤ ", fontsize=45, padding=-8, foreground=colors[1],
                 background=colors[2]),
+        CurrentLayoutIcon(scale=0.6, padding=-4),
 
         GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=colors[3],
                  disable_drag=True, highlight_method="block",
