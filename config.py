@@ -5,11 +5,18 @@ import socket
 from libqtile import bar, hook, layout
 from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
-from libqtile.widget import (Battery, Clock, CurrentLayout, GroupBox, Notify,
+from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon, GroupBox, Notify,
                              Prompt, Sep, Systray, TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
 HOME = "/home/ramnes/"
+
+GREY = "#444444"  # 1 grey
+DARK_GREY = "#333333"  # 2 darker grey
+BLUE = "#007fcf"  # 0 blue
+DARK_BLUE = "#005083"  # 3 darker blue
+ORANGE = "#dd6600"  # 4 orange
+DARK_ORANGE = "#582c00"  # 5 darker orange
 
 
 def window_to_prev_group():
@@ -117,13 +124,6 @@ def init_mouse():
                  start=lazy.window.get_size())]
 
 
-def init_colors():
-    return ["#007fcf",  # blue
-            "#444444",  # grey
-            "#333333",  # darker grey
-            "#ee75df"]  # pink
-
-
 def init_groups():
     def _inner(key, name):
         keys.append(Key([mod], key, lazy.group[name].toscreen()))
@@ -137,43 +137,45 @@ def init_groups():
 
 
 def init_floating_layout():
-    return layout.Floating(border_focus=colors[0])
+    return layout.Floating(border_focus=BLUE)
 
 
 def init_widgets():
     prompt = "{0}@{1}: ".format(os.environ["USER"], hostname)
     widgets = [
         Prompt(prompt=prompt, font="DejaVu Sans Mono", padding=10,
-               background=colors[1]),
+               background=GREY),
 
-        TextBox(text="◤ ", fontsize=45, padding=-8, foreground=colors[1],
-                background=colors[2]),
+        TextBox(text="◤ ", fontsize=45, padding=-8, foreground=GREY,
+                background=DARK_GREY),
         CurrentLayoutIcon(scale=0.6, padding=-4),
 
-        GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=colors[3],
+        TextBox(text=" ", padding=2),
+        GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=DARK_BLUE,
                  disable_drag=True, highlight_method="block",
-                 this_current_screen_border=colors[0],
-                 other_screen_border=colors[0]),
+                 this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
+                 this_current_screen_border=BLUE,
+                 other_current_screen_border=ORANGE),
 
-        TextBox(text="◤", fontsize=45, padding=-1, foreground=colors[2],
-                background=colors[1]),
+        TextBox(text="◤", fontsize=45, padding=-1, foreground=DARK_GREY,
+                background=GREY),
 
-        TaskList(borderwidth=0, highlight_method="block", background=colors[1],
-                 border=colors[2], urgent_border=colors[3]),
+        TaskList(borderwidth=0, highlight_method="block", background=GREY,
+                 border=DARK_GREY, urgent_border=DARK_BLUE),
 
-        Systray(background=colors[1]),
+        Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
-                foreground=colors[1], background=colors[2]),
+                foreground=GREY, background=DARK_GREY),
 
-        TextBox(text=" ⚠", foreground=colors[0], fontsize=18),
+        TextBox(text=" ⚠", foreground=BLUE, fontsize=18),
         Notify(),
 
-        TextBox(text=" ⌚", foreground=colors[0], fontsize=18),
-        Clock(format="%A %d-%m-%Y %H:%M"),
+        TextBox(text=" ⌚", foreground=BLUE, fontsize=18),
+        Clock(format="%A %d-%m-%Y %H:%M")
     ]
     if hostname in ("spud", "saiga"):
         widgets[-2:-2] = [
-            TextBox(text=" ↯", foreground=colors[0], fontsize=14),
+            TextBox(text=" ↯", foreground=BLUE, fontsize=14),
             Battery(update_delay=2)
         ]
     if DEBUG:
@@ -186,7 +188,7 @@ def init_top_bar():
 
 
 def init_widgets_defaults():
-    return dict(font="DejaVu", fontsize=11, padding=2, background=colors[2])
+    return dict(font="DejaVu", fontsize=11, padding=2, background=DARK_GREY)
 
 
 @hook.subscribe.client_new
@@ -212,7 +214,7 @@ def init_layouts(num_screens):
     if num_screens > 1:
         margin = 8
     layouts.extend([layout.Tile(ratio=0.5, margin=margin, border_width=1,
-                                border_normal="#111111", border_focus=colors[0])])
+                                border_normal="#111111", border_focus=BLUE)])
 
 
 # very hacky, much ugly
@@ -232,7 +234,6 @@ if __name__ in ["config", "__main__"]:
     hostname = socket.gethostname()
     cursor_warp = True
 
-    colors = init_colors()
     keys = init_keys()
     mouse = init_mouse()
     groups = init_groups()
