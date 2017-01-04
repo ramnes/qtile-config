@@ -11,12 +11,12 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon, G
 DEBUG = os.environ.get("DEBUG")
 HOME = "/home/ramnes/"
 
-GREY = "#444444"  # 1 grey
-DARK_GREY = "#333333"  # 2 darker grey
-BLUE = "#007fcf"  # 0 blue
-DARK_BLUE = "#005083"  # 3 darker blue
-ORANGE = "#dd6600"  # 4 orange
-DARK_ORANGE = "#582c00"  # 5 darker orange
+GREY = "#444444"
+DARK_GREY = "#333333"
+BLUE = "#007fcf"
+DARK_BLUE = "#005083"
+ORANGE = "#dd6600"
+DARK_ORANGE = "#582c00"
 
 
 def window_to_prev_group():
