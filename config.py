@@ -9,7 +9,7 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon, G
                              Prompt, Sep, Systray, TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
-HOME = "/home/ramnes/"
+HOME = os.path.expanduser("~") + "/"
 
 GREY = "#444444"
 DARK_GREY = "#333333"
