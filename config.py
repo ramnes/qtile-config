@@ -204,6 +204,11 @@ def set_floating(window):
         window.floating = True
 
 
+@hook.subscribe.screen_change
+def restart_on_screen_change(qtile, ev):
+    qtile.cmd_restart()
+
+
 def init_screens(num_screens):
     for _ in range(num_screens - 1):
         screens.insert(0, Screen())
