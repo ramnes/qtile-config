@@ -68,6 +68,24 @@ def switch_screens():
     return __inner
 
 
+@hook.subscribe.client_new
+def set_floating(window):
+    floating_types = ["notification", "toolbar", "splash", "dialog"]
+    floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
+    floating_names = ["Terminator Preferences"]
+
+    if (window.window.get_wm_type() in floating_types
+        or window.window.get_wm_window_role() in floating_roles
+        or window.window.get_name() in floating_names
+        or window.window.get_wm_transient_for()):
+        window.floating = True
+
+
+@hook.subscribe.screen_change
+def restart_on_screen_change(qtile, ev):
+    qtile.cmd_restart()
+
+
 def init_keys():
     keys = [
         Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
@@ -189,24 +207,6 @@ def init_top_bar():
 
 def init_widgets_defaults():
     return dict(font="DejaVu", fontsize=11, padding=2, background=DARK_GREY)
-
-
-@hook.subscribe.client_new
-def set_floating(window):
-    floating_types = ["notification", "toolbar", "splash", "dialog"]
-    floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
-    floating_names = ["Terminator Preferences"]
-
-    if (window.window.get_wm_type() in floating_types
-        or window.window.get_wm_window_role() in floating_roles
-        or window.window.get_name() in floating_names
-        or window.window.get_wm_transient_for()):
-        window.floating = True
-
-
-@hook.subscribe.screen_change
-def restart_on_screen_change(qtile, ev):
-    qtile.cmd_restart()
 
 
 def init_screens(num_screens):
