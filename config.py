@@ -81,11 +81,6 @@ def set_floating(window):
         window.floating = True
 
 
-@hook.subscribe.screen_change
-def restart_on_screen_change(qtile, ev):
-    qtile.cmd_restart()
-
-
 def init_keys():
     keys = [
         Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
