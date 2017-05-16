@@ -5,8 +5,9 @@ import socket
 from libqtile import bar, hook, layout
 from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
-from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon, GroupBox, Notify,
-                             Prompt, Sep, Systray, TaskList, TextBox)
+from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
+                             GroupBox, Notify, Prompt, Sep, Systray, TaskList,
+                             TextBox)
 
 DEBUG = os.environ.get("DEBUG")
 HOME = os.path.expanduser("~") + "/"
