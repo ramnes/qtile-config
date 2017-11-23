@@ -29,7 +29,7 @@ def window_to_prev_column_or_group():
 
         if layout.name != "columns":
             qtile.currentWindow.togroup(prev_group_name)
-        elif layout.current == 0:
+        elif layout.current == 0 and len(layout.columns) == layout.num_columns:
             if group_index != 0:
                 qtile.currentWindow.togroup(prev_group_name)
         else:
@@ -46,7 +46,7 @@ def window_to_next_column_or_group():
 
         if layout.name != "columns":
             qtile.currentWindow.togroup(next_group_name)
-        elif layout.current + 1 == len(layout.columns):
+        elif layout.current + 1 == layout.num_columns:
             if group_index != len(qtile.groups):
                 qtile.currentWindow.togroup(next_group_name)
         else:
