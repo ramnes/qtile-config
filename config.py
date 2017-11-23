@@ -20,7 +20,7 @@ ORANGE = "#dd6600"
 DARK_ORANGE = "#582c00"
 
 
-def window_to_prev_column():
+def window_to_prev_column_or_group():
     @lazy.function
     def __inner(qtile):
         layout = qtile.currentGroup.layout
@@ -37,7 +37,7 @@ def window_to_prev_column():
     return __inner
 
 
-def window_to_next_column():
+def window_to_next_column_or_group():
     @lazy.function
     def __inner(qtile):
         layout = qtile.currentGroup.layout
@@ -101,8 +101,8 @@ def init_keys():
         Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
         Key([mod], "Right", lazy.screen.next_group(skip_managed=True)),
 
-        Key([mod, "shift"], "Left", window_to_prev_column()),
-        Key([mod, "shift"], "Right", window_to_next_column()),
+        Key([mod, "shift"], "Left", window_to_prev_column_or_group()),
+        Key([mod, "shift"], "Right", window_to_next_column_or_group()),
 
         Key([mod, "mod1"], "Left", lazy.prev_screen()),
         Key([mod, "mod1"], "Right", lazy.next_screen()),
