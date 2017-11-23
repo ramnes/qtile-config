@@ -24,11 +24,14 @@ def window_to_prev_column():
     @lazy.function
     def __inner(qtile):
         layout = qtile.currentGroup.layout
-        if layout.current == 0:
-            i = qtile.groups.index(qtile.currentGroup)
-            if i != 0:
-                group = qtile.groups[i - 1].name
-                qtile.currentWindow.togroup(group)
+        group_index = qtile.groups.index(qtile.currentGroup)
+        prev_group_name = qtile.groups[group_index - 1].name
+
+        if layout.name != "columns":
+            qtile.currentWindow.togroup(prev_group_name)
+        elif layout.current == 0:
+            if group_index != 0:
+                qtile.currentWindow.togroup(prev_group_name)
         else:
             layout.cmd_shuffle_left()
     return __inner
@@ -38,11 +41,14 @@ def window_to_next_column():
     @lazy.function
     def __inner(qtile):
         layout = qtile.currentGroup.layout
-        if layout.current + 1 == len(layout.columns):
-            i = qtile.groups.index(qtile.currentGroup)
-            if i != len(qtile.groups):
-                group = qtile.groups[i + 1].name
-                qtile.currentWindow.togroup(group)
+        group_index = qtile.groups.index(qtile.currentGroup)
+        next_group_name = qtile.groups[group_index + 1].name
+
+        if layout.name != "columns":
+            qtile.currentWindow.togroup(next_group_name)
+        elif layout.current + 1 == len(layout.columns):
+            if group_index != len(qtile.groups):
+                qtile.currentWindow.togroup(next_group_name)
         else:
             layout.cmd_shuffle_right()
     return __inner
