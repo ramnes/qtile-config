@@ -20,23 +20,31 @@ ORANGE = "#dd6600"
 DARK_ORANGE = "#582c00"
 
 
-def window_to_prev_group():
+def window_to_prev_column():
     @lazy.function
     def __inner(qtile):
-        i = qtile.groups.index(qtile.currentGroup)
-        if qtile.currentWindow and i != 0:
-            group = qtile.groups[i - 1].name
-            qtile.currentWindow.togroup(group)
+        layout = qtile.currentGroup.layout
+        if layout.current == 0:
+            i = qtile.groups.index(qtile.currentGroup)
+            if i != 0:
+                group = qtile.groups[i - 1].name
+                qtile.currentWindow.togroup(group)
+        else:
+            layout.cmd_shuffle_left()
     return __inner
 
 
-def window_to_next_group():
+def window_to_next_column():
     @lazy.function
     def __inner(qtile):
-        i = qtile.groups.index(qtile.currentGroup)
-        if qtile.currentWindow and i != len(qtile.groups):
-            group = qtile.groups[i + 1].name
-            qtile.currentWindow.togroup(group)
+        layout = qtile.currentGroup.layout
+        if layout.current + 1 == len(layout.columns):
+            i = qtile.groups.index(qtile.currentGroup)
+            if i != len(qtile.groups):
+                group = qtile.groups[i + 1].name
+                qtile.currentWindow.togroup(group)
+        else:
+            layout.cmd_shuffle_right()
     return __inner
 
 
@@ -87,8 +95,8 @@ def init_keys():
         Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
         Key([mod], "Right", lazy.screen.next_group(skip_managed=True)),
 
-        Key([mod, "shift"], "Left", window_to_prev_group()),
-        Key([mod, "shift"], "Right", window_to_next_group()),
+        Key([mod, "shift"], "Left", window_to_prev_column()),
+        Key([mod, "shift"], "Right", window_to_next_column()),
 
         Key([mod, "mod1"], "Left", lazy.prev_screen()),
         Key([mod, "mod1"], "Right", lazy.next_screen()),
@@ -101,10 +109,10 @@ def init_keys():
         Key([mod], "Up", lazy.group.next_window()),
         Key([mod], "Down", lazy.group.prev_window()),
 
-        Key([mod], "space", lazy.next_layout()),
+        Key([mod, "shift"], "Up", lazy.layout.shuffle_up()),
+        Key([mod, "shift"], "Down", lazy.layout.shuffle_down()),
 
-        Key([mod], "j", lazy.layout.up()),
-        Key([mod], "k", lazy.layout.down()),
+        Key([mod], "space", lazy.next_layout()),
 
         Key([mod], "f", lazy.window.toggle_floating()),
 
@@ -229,8 +237,9 @@ def init_layouts(num_screens):
     margin = 0
     if num_screens > 1:
         margin = 8
-    layouts.extend([layout.Tile(ratio=0.5, margin=margin, border_width=1,
-                                border_normal="#111111", border_focus=BLUE)])
+    kwargs = dict(margin=margin, border_width=1, border_normal="#111111",
+                  border_focus=BLUE)
+    layouts.extend([layout.Columns(num_columns=2, **kwargs)])
 
 
 # very hacky, much ugly
