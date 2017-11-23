@@ -54,7 +54,7 @@ def window_to_next_screen():
     @lazy.function
     def __inner(qtile):
         i = qtile.screens.index(qtile.currentScreen)
-        if i != len(qtile.screens):
+        if i + 1 != len(qtile.screens):
             group = qtile.screens[i + 1].group.name
             qtile.currentWindow.togroup(group)
     return __inner
