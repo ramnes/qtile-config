@@ -9,6 +9,8 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              GroupBox, Notify, Prompt, Sep, Systray, TaskList,
                              TextBox)
 
+from widget.xrandr import XRandR
+
 DEBUG = os.environ.get("DEBUG")
 HOME = os.path.expanduser("~") + "/"
 
@@ -216,6 +218,7 @@ def init_widgets():
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
 
+        XRandR(),
         TextBox(text=" ⚠", foreground=BLUE, fontsize=18),
         Notify(),
 
