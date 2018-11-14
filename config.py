@@ -73,7 +73,7 @@ def switch_screens():
 def set_floating(window):
     floating_types = ["notification", "toolbar", "splash", "dialog"]
     floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
-    floating_names = ["Terminator Preferences"]
+    floating_names = ["gnome-screenshot", "Terminator Preferences"]
 
     if (window.window.get_wm_type() in floating_types
         or window.window.get_wm_window_role() in floating_roles
