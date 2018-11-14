@@ -233,7 +233,7 @@ if __name__ in ["config", "__main__"]:
     browser = "chromium-browser"
     terminal = "roxterm"
     hostname = socket.gethostname()
-    cursor_warp = True
+    cursor_warp = False
 
     keys = init_keys()
     mouse = init_mouse()
