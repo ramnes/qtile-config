@@ -104,6 +104,11 @@ def init_keys():
         Key([mod, "shift"], "Left", window_to_prev_column_or_group()),
         Key([mod, "shift"], "Right", window_to_next_column_or_group()),
 
+        Key([mod, "control"], "Up", lazy.layout.grow_up()),
+        Key([mod, "control"], "Down", lazy.layout.grow_down()),
+        Key([mod, "control"], "Left", lazy.layout.grow_left()),
+        Key([mod, "control"], "Right", lazy.layout.grow_right()),
+
         Key([mod, "mod1"], "Left", lazy.prev_screen()),
         Key([mod, "mod1"], "Right", lazy.next_screen()),
 
