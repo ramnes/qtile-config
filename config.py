@@ -163,7 +163,7 @@ def init_groups():
 
 
 def init_floating_layout():
-    return layout.Floating(border_focus=BLUE)
+    return layout.Floating(border_focus=ORANGE)
 
 
 def init_widgets():
