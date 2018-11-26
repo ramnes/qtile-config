@@ -126,8 +126,12 @@ def init_keys():
         Key([mod], "Home", lazy.spawn(HOME + ".local/bin/spotify-dbus previous")),
     ]
     if DEBUG:
-        keys += [Key(["mod1"], "Tab", lazy.layout.next()),
-                 Key(["mod1", "shift"], "Tab", lazy.layout.previous())]
+        keys += [
+            Key([mod], "Tab", lazy.layout.next()),
+            Key([mod, "shift"], "Tab", lazy.layout.previous()),
+            Key([mod], "f", lazy.layout.flip()),
+            Key([mod], "s", lazy.group["scratch"].dropdown_toggle("term"))
+        ]
     return keys
 
 
@@ -147,7 +151,15 @@ def init_groups():
     groups = [("dead_grave", "00")]
     groups += [(str(i), "0" + str(i)) for i in range(1, 10)]
     groups += [("0", "10"), ("minus", "11"), ("equal", "12")]
-    return [_inner(*i) for i in groups]
+    groups = [_inner(*i) for i in groups]
+
+    if DEBUG:
+        from libqtile.config import DropDown, ScratchPad
+        dropdowns = [DropDown("term", terminal, x=0.125, y=0.25,
+                              width=0.75, height=0.5, opacity=0.8,
+                              on_focus_lost_hide=True)]
+        groups.append(ScratchPad("scratch", dropdowns))
+    return groups
 
 
 def init_floating_layout():
@@ -198,7 +210,10 @@ def init_widgets():
 
 
 def init_top_bar():
-    return bar.Bar(widgets=init_widgets(), size=22, opacity=1)
+    main_bar = bar.Bar(widgets=init_widgets(), size=22, opacity=1)
+    if DEBUG:
+        return [main_bar, bar.Gap(size=1)]
+    return main_bar
 
 
 def init_widgets_defaults():
@@ -245,8 +260,6 @@ if __name__ in ["config", "__main__"]:
 
     if DEBUG:
         layouts += [
-            floating_layout, layout.Stack(), layout.Zoomy(), layout.Matrix(),
-            layout.TreeTab(), layout.MonadTall(), layout.RatioTile(),
-            layout.Slice('left', 192, name='slice-test', role='gnome-terminal',
-                         fallback=layout.Slice('right', 256, role='gimp-dock',
-                                               fallback=layout.Stack(stacks=1)))]
+            floating_layout, layout.Zoomy(), layout.Tile(), layout.Matrix(),
+            layout.TreeTab(), layout.MonadTall(margin=10), layout.RatioTile()
+        ]
