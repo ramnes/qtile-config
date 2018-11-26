@@ -1,0 +1,2 @@
+[ -f ~/.xprofile ] && . ~/.xprofile
+qtile

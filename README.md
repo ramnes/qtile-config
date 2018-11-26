@@ -19,6 +19,12 @@ Install
 git clone git@github.com:ramnes/qtile-config.git ~/.config/qtile
 ```
 
+Debug
+-----
+
+```
+ sudo DEBUG=1 startx ~/.config/qtile/xinitrc -- :1 vt8
+```
 
 What it looks like (or used to)
 -------------------------------
