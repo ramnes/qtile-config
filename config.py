@@ -250,7 +250,9 @@ def init_layouts(num_screens):
         margin = 8
     kwargs = dict(margin=margin, border_width=1, border_normal="#111111",
                   border_focus=BLUE)
-    layouts.extend([layout.Columns(num_columns=2, **kwargs)])
+    layouts.extend([
+        layout.Columns(num_columns=2, grow_amount=5, **kwargs)
+    ])
 
 
 # very hacky, much ugly
