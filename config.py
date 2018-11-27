@@ -25,7 +25,7 @@ def window_to_prev_column_or_group():
     def __inner(qtile):
         layout = qtile.currentGroup.layout
         group_index = qtile.groups.index(qtile.currentGroup)
-        prev_group_name = qtile.groups[group_index - 1].name
+        prev_group_name = qtile.currentGroup.prevGroup().name
 
         if layout.name != "columns":
             qtile.currentWindow.togroup(prev_group_name)
@@ -42,12 +42,12 @@ def window_to_next_column_or_group():
     def __inner(qtile):
         layout = qtile.currentGroup.layout
         group_index = qtile.groups.index(qtile.currentGroup)
-        next_group_name = qtile.groups[group_index + 1].name
+        next_group_name = qtile.currentGroup.nextGroup().name
 
         if layout.name != "columns":
             qtile.currentWindow.togroup(next_group_name)
         elif layout.current + 1 == len(layout.columns) and len(layout.cc) == 1:
-            if group_index != len(qtile.groups):
+            if group_index + 1 != len(qtile.groups):
                 qtile.currentWindow.togroup(next_group_name)
         else:
             layout.cmd_shuffle_right()
