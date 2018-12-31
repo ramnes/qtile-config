@@ -136,7 +136,7 @@ def init_keys():
         Key([mod, "shift"], "q", lazy.shutdown()),
 
         Key([], "Print", lazy.spawn("gnome-screenshot -i")),
-        Key([], "Scroll_Lock", lazy.spawn(HOME + ".local/bin/i3lock -d")),
+        Key([], "Scroll_Lock", lazy.spawn(screenlocker)),
         Key([mod], "Delete", lazy.spawn("amixer set Master toggle")),
         Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
         Key([mod], "Next", lazy.spawn("amixer set Master 5-")),
@@ -269,6 +269,7 @@ if __name__ in ["config", "__main__"]:
     mod = "mod4"
     browser = "chromium-browser"
     terminal = "roxterm"
+    screenlocker = HOME + ".local/bin/i3lock -d"
     hostname = socket.gethostname()
     cursor_warp = False
 
