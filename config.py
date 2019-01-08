@@ -88,10 +88,12 @@ def set_floating(window):
     floating_types = ["notification", "toolbar", "splash", "dialog"]
     floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
     floating_names = ["gnome-screenshot", "Terminator Preferences"]
+    floating_classes = ["gcr-prompter"]
 
     if (window.window.get_wm_type() in floating_types
         or window.window.get_wm_window_role() in floating_roles
         or window.window.get_name() in floating_names
+        or window.window.get_wm_class()[0] in floating_classes
         or window.window.get_wm_transient_for()):
         window.floating = True
 
