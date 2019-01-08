@@ -231,7 +231,7 @@ def init_widgets():
 def init_top_bar():
     main_bar = bar.Bar(widgets=init_widgets(), size=22, opacity=1)
     if DEBUG:
-        return [main_bar, bar.Gap(size=1)]
+        return [main_bar, bar.Bar(widgets=[], size=10)]
     return main_bar
 
 
