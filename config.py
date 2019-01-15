@@ -20,18 +20,18 @@ ORANGE = "#dd6600"
 DARK_ORANGE = "#582c00"
 
 
-def window_to_prev_column_or_group():
+def window_to_previous_column_or_group():
     @lazy.function
     def __inner(qtile):
-        layout = qtile.currentGroup.layout
-        group_index = qtile.groups.index(qtile.currentGroup)
-        prev_group_name = qtile.currentGroup.prevGroup().name
+        layout = qtile.current_group.layout
+        group_index = qtile.groups.index(qtile.current_group)
+        previous_group_name = qtile.current_group.get_previous_group().name
 
         if layout.name != "columns":
-            qtile.currentWindow.togroup(prev_group_name)
+            qtile.current_window.togroup(previous_group_name)
         elif layout.current == 0 and len(layout.cc) == 1:
             if group_index != 0:
-                qtile.currentWindow.togroup(prev_group_name)
+                qtile.current_window.togroup(previous_group_name)
         else:
             layout.cmd_shuffle_left()
     return __inner
@@ -40,46 +40,46 @@ def window_to_prev_column_or_group():
 def window_to_next_column_or_group():
     @lazy.function
     def __inner(qtile):
-        layout = qtile.currentGroup.layout
-        group_index = qtile.groups.index(qtile.currentGroup)
-        next_group_name = qtile.currentGroup.nextGroup().name
+        layout = qtile.current_group.layout
+        group_index = qtile.groups.index(qtile.current_group)
+        next_group_name = qtile.current_group.get_next_group().name
 
         if layout.name != "columns":
-            qtile.currentWindow.togroup(next_group_name)
+            qtile.current_window.togroup(next_group_name)
         elif layout.current + 1 == len(layout.columns) and len(layout.cc) == 1:
             if group_index + 1 != len(qtile.groups):
-                qtile.currentWindow.togroup(next_group_name)
+                qtile.current_window.togroup(next_group_name)
         else:
             layout.cmd_shuffle_right()
     return __inner
 
 
-def window_to_prev_screen():
+def window_to_previous_screen():
     @lazy.function
     def __inner(qtile):
-        i = qtile.screens.index(qtile.currentScreen)
+        i = qtile.screens.index(qtile.current_screen)
         if i != 0:
             group = qtile.screens[i - 1].group.name
-            qtile.currentWindow.togroup(group)
+            qtile.current_window.togroup(group)
     return __inner
 
 
 def window_to_next_screen():
     @lazy.function
     def __inner(qtile):
-        i = qtile.screens.index(qtile.currentScreen)
+        i = qtile.screens.index(qtile.current_screen)
         if i + 1 != len(qtile.screens):
             group = qtile.screens[i + 1].group.name
-            qtile.currentWindow.togroup(group)
+            qtile.current_window.togroup(group)
     return __inner
 
 
 def switch_screens():
     @lazy.function
     def __inner(qtile):
-        i = qtile.screens.index(qtile.currentScreen)
+        i = qtile.screens.index(qtile.current_screen)
         group = qtile.screens[i - 1].group
-        qtile.currentScreen.setGroup(group)
+        qtile.current_screen.set_group(group)
     return __inner
 
 
@@ -103,7 +103,7 @@ def init_keys():
         Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
         Key([mod], "Right", lazy.screen.next_group(skip_managed=True)),
 
-        Key([mod, "shift"], "Left", window_to_prev_column_or_group()),
+        Key([mod, "shift"], "Left", window_to_previous_column_or_group()),
         Key([mod, "shift"], "Right", window_to_next_column_or_group()),
 
         Key([mod, "control"], "Up", lazy.layout.grow_up()),
@@ -111,10 +111,10 @@ def init_keys():
         Key([mod, "control"], "Left", lazy.layout.grow_left()),
         Key([mod, "control"], "Right", lazy.layout.grow_right()),
 
-        Key([mod, "mod1"], "Left", lazy.prev_screen()),
+        Key([mod, "mod1"], "Left", lazy.previous_screen()),
         Key([mod, "mod1"], "Right", lazy.next_screen()),
 
-        Key([mod, "shift", "mod1"], "Left", window_to_prev_screen()),
+        Key([mod, "shift", "mod1"], "Left", window_to_previous_screen()),
         Key([mod, "shift", "mod1"], "Right", window_to_next_screen()),
 
         Key([mod], "t", switch_screens()),
