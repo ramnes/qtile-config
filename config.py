@@ -287,5 +287,6 @@ if __name__ in ["config", "__main__"]:
     if DEBUG:
         layouts += [
             floating_layout, layout.Zoomy(), layout.Tile(), layout.Matrix(),
-            layout.TreeTab(), layout.MonadTall(margin=10), layout.RatioTile()
+            layout.TreeTab(), layout.MonadTall(margin=10), layout.RatioTile(),
+            layout.Stack()
         ]
