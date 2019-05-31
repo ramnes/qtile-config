@@ -7,7 +7,7 @@ from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              GroupBox, Notify, Prompt, Sep, Systray, TaskList,
-                             TextBox)
+                             TextBox, Py3status)
 
 DEBUG = os.environ.get("DEBUG")
 HOME = os.path.expanduser("~") + "/"
@@ -219,7 +219,7 @@ def init_widgets():
         Notify(),
 
         TextBox(text=" ⌚", foreground=BLUE, fontsize=18),
-        Clock(format="%A %d-%m-%Y %H:%M")
+        Py3status(module_name="clock")
     ]
     if hostname in ("spud", "saiga"):
         widgets[-2:-2] = [
