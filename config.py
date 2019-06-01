@@ -152,7 +152,7 @@ def init_keys():
         keys += [
             Key([mod], "Tab", lazy.layout.next()),
             Key([mod, "shift"], "Tab", lazy.layout.previous()),
-            Key([mod], "f", lazy.layout.flip()),
+            Key([mod, "shift"], "f", lazy.layout.flip()),
             Key([mod, "shift"], "s", lazy.group["scratch"].dropdown_toggle("term"))
         ]
     return keys
