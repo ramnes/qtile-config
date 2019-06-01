@@ -129,6 +129,7 @@ def init_keys():
         Key([mod], "space", lazy.next_layout()),
 
         Key([mod], "f", lazy.window.toggle_floating()),
+        Key([mod], "s", lazy.layout.toggle_split()),
 
         Key([mod], "r", lazy.spawncmd()),
         Key([mod], "u", lazy.spawn(browser)),
@@ -152,7 +153,7 @@ def init_keys():
             Key([mod], "Tab", lazy.layout.next()),
             Key([mod, "shift"], "Tab", lazy.layout.previous()),
             Key([mod], "f", lazy.layout.flip()),
-            Key([mod], "s", lazy.group["scratch"].dropdown_toggle("term"))
+            Key([mod, "shift"], "s", lazy.group["scratch"].dropdown_toggle("term"))
         ]
     return keys
 
@@ -253,7 +254,7 @@ def init_layouts(num_screens):
     if num_screens > 1:
         margin = 8
     kwargs = dict(margin=margin, border_width=1, border_normal="#111111",
-                  border_focus=BLUE)
+                  border_focus=BLUE, border_focus_stack=ORANGE)
     layouts.extend([
         layout.Columns(num_columns=2, grow_amount=5, **kwargs)
     ])
