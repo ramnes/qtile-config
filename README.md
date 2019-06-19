@@ -9,7 +9,7 @@ Dependencies
 
 * `Qtile`: https://github.com/qtile/qtile (I'm constantly running on Qtile's
   HEAD, don't expect backward compatibility)
-* `Python` (any >=2.7 version should work)
+* `Python` (any >=3.5 version should work)
 
 
 Install
