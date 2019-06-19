@@ -146,6 +146,7 @@ def init_keys():
         Key([mod, "shift"], "q", lazy.shutdown()),
 
         Key([], "Print", lazy.spawn("gnome-screenshot -i")),
+        Key([mod], "Print", lazy.spawn("gnome-screenshot -p")),
         Key([], "Scroll_Lock", lazy.spawn(screenlocker)),
         Key([mod], "Delete", lazy.spawn("amixer set Master toggle")),
         Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
