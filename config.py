@@ -10,7 +10,6 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              TextBox)
 
 DEBUG = os.environ.get("DEBUG")
-HOME = os.path.expanduser("~") + "/"
 
 GREY = "#444444"
 DARK_GREY = "#333333"
@@ -151,9 +150,9 @@ def init_keys():
         Key([mod], "Delete", lazy.spawn("amixer set Master toggle")),
         Key([mod], "Prior", lazy.spawn("amixer set Master 5+")),
         Key([mod], "Next", lazy.spawn("amixer set Master 5-")),
-        Key([mod], "Insert", lazy.spawn(HOME + ".local/bin/spotify-dbus playpause")),
-        Key([mod], "End", lazy.spawn(HOME + ".local/bin/spotify-dbus next")),
-        Key([mod], "Home", lazy.spawn(HOME + ".local/bin/spotify-dbus previous")),
+        Key([mod], "Insert", lazy.spawn("spotify-dbus playpause")),
+        Key([mod], "End", lazy.spawn("spotify-dbus next")),
+        Key([mod], "Home", lazy.spawn("spotify-dbus previous")),
     ]
     if DEBUG:
         keys += [
@@ -275,13 +274,14 @@ def main(qtile):
 
 
 if __name__ in ["config", "__main__"]:
-    if HOME + ".local/bin" not in os.environ["PATH"]:
-        os.environ["PATH"] = HOME + ".local/bin:{}".format(os.environ["PATH"])
+    local_bin = os.path.expanduser("~") + "/.local/bin"
+    if local_bin not in os.environ["PATH"]:
+        os.environ["PATH"] = "{}:{}".format(local_bin, os.environ["PATH"])
 
     mod = "mod4"
     browser = "chromium-browser"
     terminal = "roxterm"
-    screenlocker = HOME + ".local/bin/i3lock -d"
+    screenlocker = "i3lock -d"
     hostname = socket.gethostname()
     cursor_warp = False
 
