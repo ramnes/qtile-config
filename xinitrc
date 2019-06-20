@@ -1,2 +1,6 @@
-[ -f ~/.xprofile ] && . ~/.xprofile
+#!/bin/bash
+if [[ -f ~/.xprofile ]]; then
+   . ~/.xprofile
+fi
+
 qtile
