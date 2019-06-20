@@ -228,7 +228,7 @@ def init_widgets():
         TextBox(text=" ⌚", foreground=BLUE, fontsize=18),
         Clock(format="%A %d-%m-%Y %H:%M")
     ]
-    if hostname in ("spud", "saiga"):
+    if os.path.isdir("/sys/module/battery"):
         widgets[-2:-2] = [
             TextBox(text=" ↯", foreground=BLUE, fontsize=14),
             Battery(update_delay=2)
