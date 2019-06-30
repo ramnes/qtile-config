@@ -117,7 +117,7 @@ def init_keys():
         Key([mod, "control"], "Left", lazy.layout.grow_left()),
         Key([mod, "control"], "Right", lazy.layout.grow_right()),
 
-        Key([mod, "mod1"], "Left", lazy.previous_screen()),
+        Key([mod, "mod1"], "Left", lazy.prev_screen()),
         Key([mod, "mod1"], "Right", lazy.next_screen()),
 
         Key([mod, "shift", "mod1"], "Left", window_to_previous_screen()),
