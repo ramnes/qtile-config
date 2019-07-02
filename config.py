@@ -279,7 +279,7 @@ if __name__ in ["config", "__main__"]:
         os.environ["PATH"] = "{}:{}".format(local_bin, os.environ["PATH"])
 
     mod = "mod4"
-    browser = "chromium-browser"
+    browser = "google-chrome"
     terminal = "roxterm"
     screenlocker = "i3lock -d"
     hostname = socket.gethostname()
