@@ -11,8 +11,8 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
 
 DEBUG = os.environ.get("DEBUG")
 
-GREY = "#444444"
-DARK_GREY = "#333333"
+GREY = "#222222"
+DARK_GREY = "#111111"
 BLUE = "#007fcf"
 DARK_BLUE = "#005083"
 ORANGE = "#dd6600"
