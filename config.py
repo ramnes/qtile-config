@@ -13,10 +13,10 @@ DEBUG = os.environ.get("DEBUG")
 
 GREY = "#222222"
 DARK_GREY = "#111111"
-BLUE = "#007fcf"
-DARK_BLUE = "#005083"
+BLUE = "#007fdf"
+DARK_BLUE = "#002a4a"
 ORANGE = "#dd6600"
-DARK_ORANGE = "#582c00"
+DARK_ORANGE = "#371900"
 
 
 def window_to_previous_column_or_group():
