@@ -165,10 +165,14 @@ def init_keys():
 
 
 def init_mouse():
-    return [Drag([mod], "Button1", lazy.window.set_position_floating(),
-                 start=lazy.window.get_position()),
-            Drag([mod], "Button3", lazy.window.set_size_floating(),
-                 start=lazy.window.get_size())]
+    mouse = [Drag([mod], "Button1", lazy.window.set_position_floating(),
+                  start=lazy.window.get_position()),
+             Drag([mod], "Button3", lazy.window.set_size_floating(),
+                  start=lazy.window.get_size())]
+    if DEBUG:
+        mouse += [Drag([mod, "shift"], "Button1", lazy.window.set_position(),
+                       start=lazy.window.get_position())]
+    return mouse
 
 
 def init_groups():
