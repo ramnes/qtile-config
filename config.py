@@ -6,8 +6,8 @@ from libqtile import bar, hook, layout
 from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
-                             GroupBox, Notify, Prompt, Sep, Systray, TaskList,
-                             TextBox)
+                             GroupBox, Notify, Prompt, Sep, Spacer, Systray,
+                             TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
 
@@ -209,7 +209,7 @@ def init_widgets():
                 background=DARK_GREY),
         CurrentLayoutIcon(scale=0.6, padding=-4),
 
-        TextBox(text=" ", padding=2),
+        Spacer(width=10),
         GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=DARK_BLUE,
                  disable_drag=True, highlight_method="block",
                  this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
