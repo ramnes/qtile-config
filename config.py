@@ -225,18 +225,11 @@ def init_widgets():
         Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
-
-        TextBox(text=" ⚠", foreground=BLUE, fontsize=18),
-        Notify(),
-
-        TextBox(text=" ⌚", foreground=BLUE, fontsize=18),
-        Clock(format="%A %d-%m-%Y %H:%M")
+        Notify(fmt=" 🔥 {}"),
+        Clock(fmt=" ⌚ {}", format="%A %d-%m-%Y %H:%M")
     ]
     if os.path.isdir("/sys/module/battery"):
-        widgets[-2:-2] = [
-            TextBox(text=" ↯", foreground=BLUE, fontsize=14),
-            Battery(update_delay=2)
-        ]
+        widgets.insert(-1, Battery(fmt=" ⚡️ {}", update_delay=2))
     if DEBUG:
         widgets += [Sep(), CurrentLayout()]
     return widgets
