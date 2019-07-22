@@ -7,9 +7,9 @@ My `~/.config/qtile`
 Dependencies
 ------------
 
-* `Qtile`: https://github.com/qtile/qtile (I'm constantly running on Qtile's
+* [Qtile](https://github.com/qtile/qtile) (I'm constantly running on Qtile's
   HEAD, don't expect backward compatibility)
-* `Python` (any >=3.5 version should work)
+* Python (any >=3.5 version should work)
 
 
 Install
@@ -24,8 +24,10 @@ Debug
 -----
 
 ```
- sudo DEBUG=1 startx ~/.config/qtile/xinitrc -- :1 vt8
+sudo DEBUG=1 startx ~/.config/qtile/xinitrc -- :1 vt8
 ```
+
+(this command can be simplified depending on your Linux setup)
 
 
 What it looks like (or used to)
