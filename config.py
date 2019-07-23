@@ -225,11 +225,20 @@ def init_widgets():
         Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
-        Notify(fmt=" 🔥 {}"),
-        Clock(fmt=" ⌚ {}", format="%A %d-%m-%Y %H:%M")
+        Notify(fmt=" 🔥 {} "),
+        Clock(format=" ⏱ %H:%M  <span color='#666'>%A %d-%m-%Y</span>  ")
     ]
     if os.path.isdir("/sys/module/battery"):
-        widgets.insert(-1, Battery(fmt=" ⚡️ {}", update_delay=2))
+        widgets.insert(-1, Battery(format=" {char} {percent:2.0%} ",
+                                   charge_char="⚡", discharge_char="🔋",
+                                   full_char="⚡", unknown_char="⚡",
+                                   empty_char="⁉️ ", update_interval=2,
+                                   show_short_text=False,
+                                   default_text=""))
+        widgets.insert(-1, Battery(fmt="<span color='#666'>{}</span> ",
+                                   format="{hour:d}:{min:02d}",
+                                   update_interval=2, show_short_text=True,
+                                   default_text=""))
     if DEBUG:
         widgets += [Sep(), CurrentLayout()]
     return widgets
