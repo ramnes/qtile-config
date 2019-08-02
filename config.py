@@ -246,9 +246,9 @@ def init_widgets():
 
 def init_top_bar():
     main_bar = bar.Bar(widgets=init_widgets(), size=22, opacity=1)
-    # # only works with branch ramnes:multiple_gaps_per_position
-    # if DEBUG:
-    #     return [main_bar, bar.Bar(widgets=[], size=10)]
+    # only works with branch ramnes:multiple_gaps_per_position
+    if DEBUG:
+        return [main_bar, bar.Bar(widgets=[], size=10)]
     return main_bar
 
 
