@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import socket
+import subprocess
 
 from libqtile import bar, hook, layout
 from libqtile.command import lazy
@@ -102,6 +103,27 @@ def set_floating(window):
             window.floating = True
     except IndexError:
         pass
+
+
+# heavily inspired from the config of cjbarnes18 <3
+# https://gist.github.com/cjbarnes18/4151805
+@hook.subscribe.screen_change
+def set_screens(qtile, event):
+    xrandr_state = subprocess.check_output(["xrandr"])
+    if b"DP2-2 connected" in xrandr_state:
+        xrandr_command = [
+            "xrandr",
+            "--output", "eDP1", "--auto", "--primary",
+            "--output", "DP2-2", "--auto", "--left-of", "eDP1",
+        ]
+    else:
+        xrandr_command = [
+            "xrandr",
+            "--output", "eDP1", "--auto", "--primary",
+            "--output", "DP2-2", "--off",
+        ]
+    subprocess.call(xrandr_command)
+    qtile.cmd_restart()
 
 
 def init_keys():
