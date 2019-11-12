@@ -105,21 +105,9 @@ def set_floating(window):
         pass
 
 
-# heavily inspired from the config of cjbarnes18 <3
-# https://gist.github.com/cjbarnes18/4151805
 @hook.subscribe.screen_change
 def set_screens(qtile, event):
-    xrandr_state = subprocess.check_output(["xrandr"])
-    for screen in ("DP1", "DP2-2"):
-        if "{} connected".format(screen).encode() in xrandr_state:
-            xrandr_command = [
-                "xrandr",
-                "--output", "eDP1", "--auto", "--primary",
-                "--output", screen, "--auto", "--left-of", "eDP1"
-            ]
-        else:
-            xrandr_command = ["xrandr", "--output", screen, "--off"]
-        subprocess.call(xrandr_command)
+    subprocess.run(["autorandr", "--change"])
     qtile.cmd_restart()
 
 
