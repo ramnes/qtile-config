@@ -303,7 +303,7 @@ if __name__ in ["config", "__main__"]:
     groups = init_groups()
     floating_layout = init_floating_layout()
     layouts = [layout.Max()]
-    screens = [Screen(top=init_top_bar())]
+    screens = [Screen(top=init_top_bar(), wallpaper="~/.background.jpg")]
     widget_defaults = init_widgets_defaults()
 
     if DEBUG:
