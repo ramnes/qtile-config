@@ -4,8 +4,8 @@ import socket
 import subprocess
 
 from libqtile import bar, hook, layout
-from libqtile.command import lazy
 from libqtile.config import Drag, Group, Key, Screen
+from libqtile.lazy import lazy
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              GroupBox, Notify, Prompt, Sep, Spacer, Systray,
                              TaskList, TextBox)
