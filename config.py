@@ -6,6 +6,7 @@ import subprocess
 from libqtile import bar, hook, layout
 from libqtile.config import Drag, Group, Key, Screen
 from libqtile.lazy import lazy
+from libqtile.log_utils import logger
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              GroupBox, Notify, Prompt, Sep, Spacer, Systray,
                              TaskList, TextBox)
@@ -107,6 +108,7 @@ def set_floating(window):
 
 @hook.subscribe.screen_change
 def set_screens(qtile, event):
+    logger.debug("Handling event: {}".format(event))
     subprocess.run(["autorandr", "--change"])
     qtile.cmd_restart()
 
@@ -281,6 +283,7 @@ def init_layouts(num_screens):
 
 # very hacky, much ugly
 def main(qtile):
+    logger.debug("Hello world!")
     num_screens = len(qtile.conn.pseudoscreens)
     init_screens(num_screens)
     init_layouts(num_screens)
