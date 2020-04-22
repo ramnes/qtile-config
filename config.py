@@ -285,6 +285,9 @@ def main(qtile):
     init_screens(num_screens)
     init_layouts(num_screens)
 
+    if DEBUG:
+        qtile.cmd_debug()
+
 
 if __name__ in ["config", "__main__"]:
     local_bin = os.path.expanduser("~") + "/.local/bin"
