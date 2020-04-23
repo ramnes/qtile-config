@@ -86,19 +86,12 @@ def switch_screens():
 
 @hook.subscribe.client_new
 def set_floating(window):
-    floating_types = ["notification", "toolbar", "splash", "dialog"]
-    floating_roles = ["EventDialog", "Msgcompose", "Preferences"]
-    floating_names = ["Terminator Preferences"]
-    floating_classes = ["gcr-prompter", "gnome-screenshot",
-                        "nm-connection-editor", "pavucontrol"]
-
-    if (window.window.get_wm_type() in floating_types
-        or window.window.get_wm_window_role() in floating_roles
-        or window.window.get_name() in floating_names
-        or window.window.get_wm_transient_for()):
+    normal_hints = window.window.get_wm_normal_hints()
+    if normal_hints and normal_hints["max_width"]:
         window.floating = True
         return
 
+    floating_classes = ("nm-connection-editor", "pavucontrol")
     try:
         if window.window.get_wm_class()[0] in floating_classes:
             window.floating = True
