@@ -4,7 +4,7 @@ import socket
 import subprocess
 
 from libqtile import bar, hook, layout
-from libqtile.config import Drag, Group, Key, Screen
+from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
@@ -170,7 +170,8 @@ def init_mouse():
     mouse = [Drag([mod], "Button1", lazy.window.set_position_floating(),
                   start=lazy.window.get_position()),
              Drag([mod], "Button3", lazy.window.set_size_floating(),
-                  start=lazy.window.get_size())]
+                  start=lazy.window.get_size()),
+             Click([mod], "Button2", lazy.window.kill())]
     if DEBUG:
         mouse += [Drag([mod, "shift"], "Button1", lazy.window.set_position(),
                        start=lazy.window.get_position())]
