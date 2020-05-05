@@ -8,8 +8,8 @@ from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
-                             GroupBox, Notify, Prompt, Sep, Spacer, Systray,
-                             TaskList, TextBox)
+                             GroupBox, Notify, PulseVolume, Prompt, Sep,
+                             Spacer, Systray, TaskList, TextBox)
 
 DEBUG = os.environ.get("DEBUG")
 
@@ -229,6 +229,8 @@ def init_widgets():
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
         Notify(fmt=" 🔥 {} "),
+        PulseVolume(fmt=" {}", emoji=True, volume_app="pavucontrol"),
+        PulseVolume(volume_app="pavucontrol"),
         Clock(format=" ⏱ %H:%M  <span color='#666'>%A %d-%m-%Y</span>  ")
     ]
     if os.path.isdir("/sys/module/battery"):
