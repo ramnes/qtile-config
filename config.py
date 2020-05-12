@@ -212,7 +212,7 @@ def init_widgets():
                 background=DARK_GREY),
         CurrentLayoutIcon(scale=0.6, padding=-4),
 
-        Spacer(width=10),
+        Spacer(length=10),
         GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=DARK_BLUE,
                  disable_drag=True, highlight_method="block",
                  this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
