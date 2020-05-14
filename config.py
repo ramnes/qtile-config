@@ -145,6 +145,7 @@ def init_keys():
 
         Key([mod, "shift"], "r", lazy.restart()),
         Key([mod, "shift"], "q", lazy.shutdown()),
+        Key([mod], "v", lazy.validate_config()),
 
         Key([], "Print", lazy.spawn("gnome-screenshot -i")),
         Key([mod], "Print", lazy.spawn("gnome-screenshot -p")),
