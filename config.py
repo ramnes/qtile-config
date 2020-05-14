@@ -103,7 +103,7 @@ def set_floating(window):
 def set_screens(qtile, event):
     logger.debug("Handling event: {}".format(event))
     subprocess.run(["autorandr", "--change"])
-    qtile.cmd_restart()
+    qtile.restart()
 
 
 def init_keys():
