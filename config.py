@@ -280,13 +280,14 @@ def init_layouts(num_screens):
 
 # very hacky, much ugly
 def main(qtile):
+    if DEBUG:
+        qtile.cmd_debug()
+
     logger.debug("Hello world!")
+
     num_screens = len(qtile.conn.pseudoscreens)
     init_screens(num_screens)
     init_layouts(num_screens)
-
-    if DEBUG:
-        qtile.cmd_debug()
 
 
 if __name__ in ["config", "__main__"]:
