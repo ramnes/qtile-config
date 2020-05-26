@@ -11,6 +11,11 @@ from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
                              GroupBox, Notify, PulseVolume, Prompt, Sep,
                              Spacer, Systray, TaskList, TextBox)
 
+try:
+    import aiomanhole
+except ImportError:
+    aiomanhole = None
+
 DEBUG = os.environ.get("DEBUG")
 
 GREY = "#222222"
@@ -288,6 +293,9 @@ def main(qtile):
     num_screens = len(qtile.conn.pseudoscreens)
     init_screens(num_screens)
     init_layouts(num_screens)
+
+    if aiomanhole:
+        aiomanhole.start_manhole(port=7113, namespace={"qtile": qtile})
 
 
 if __name__ in ["config", "__main__"]:
