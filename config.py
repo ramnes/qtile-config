@@ -308,7 +308,8 @@ if __name__ in ["config", "__main__"]:
     terminal = "roxterm"
     screenlocker = "i3lock -d"
     hostname = socket.gethostname()
-    cursor_warp = False
+    cursor_warp = True
+    focus_on_window_activation = "never"
 
     keys = init_keys()
     mouse = init_mouse()
