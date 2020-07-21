@@ -141,6 +141,7 @@ def init_keys():
         Key([mod], "space", lazy.next_layout()),
 
         Key([mod], "f", lazy.window.toggle_floating()),
+        Key([mod], "b", lazy.window.bring_to_front()),
         Key([mod], "s", lazy.layout.toggle_split()),
 
         Key([mod], "r", lazy.spawncmd()),
