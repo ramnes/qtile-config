@@ -268,11 +268,6 @@ def init_widgets_defaults():
     return dict(font="DejaVu", fontsize=11, padding=2, background=DARK_GREY)
 
 
-def init_screens(num_screens):
-    for _ in range(num_screens - 1):
-        screens.insert(0, Screen())
-
-
 def init_layouts(num_screens):
     margin = 0
     if num_screens > 1:
@@ -292,7 +287,6 @@ def main(qtile):
     logger.debug("Hello world!")
 
     num_screens = len(qtile.conn.pseudoscreens)
-    init_screens(num_screens)
     init_layouts(num_screens)
 
     if aiomanhole:
