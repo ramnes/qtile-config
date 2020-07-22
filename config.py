@@ -273,7 +273,7 @@ def init_layouts(num_screens):
     margin = 0
     if num_screens > 1:
         margin = 8
-    kwargs = dict(margin=margin, border_width=1, border_normal="#111111",
+    kwargs = dict(margin=margin, border_width=1, border_normal=DARK_GREY,
                   border_focus=BLUE, border_focus_stack=ORANGE)
     layouts.extend([
         layout.Columns(num_columns=2, grow_amount=5, **kwargs)
