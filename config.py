@@ -211,16 +211,8 @@ def init_floating_layout():
 
 
 def init_widgets():
-    prompt = "{0}@{1}: ".format(os.environ["USER"], hostname)
     widgets = [
-        Prompt(prompt=prompt, font="DejaVu Sans Mono", padding=10,
-               background=GREY),
-
-        TextBox(text="◤ ", fontsize=45, padding=-8, foreground=GREY,
-                background=DARK_GREY),
-        CurrentLayoutIcon(scale=0.6, padding=-4),
-
-        Spacer(length=10),
+        CurrentLayoutIcon(scale=0.6, padding=8),
         GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=DARK_BLUE,
                  disable_drag=True, highlight_method="block",
                  this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
