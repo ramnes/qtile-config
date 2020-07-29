@@ -3,7 +3,7 @@ import os
 import socket
 import subprocess
 
-from libqtile import bar, hook, layout
+from libqtile import bar, hook, layout, qtile
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
@@ -105,7 +105,7 @@ def set_floating(window):
 
 
 @hook.subscribe.screen_change
-def set_screens(qtile, event):
+def set_screens(event):
     logger.debug("Handling event: {}".format(event))
     subprocess.run(["autorandr", "--change"])
     qtile.restart()
@@ -261,28 +261,27 @@ def init_widgets_defaults():
     return dict(font="DejaVu", fontsize=11, padding=2, background=DARK_GREY)
 
 
-def init_layouts(num_screens):
+def init_layouts():
     margin = 0
-    if num_screens > 1:
+    if len(qtile.conn.pseudoscreens) > 1:
         margin = 8
     kwargs = dict(margin=margin, border_width=1, border_normal=DARK_GREY,
                   border_focus=BLUE, border_focus_stack=ORANGE)
-    layouts.extend([
+    return [
+        layout.Max(),
         layout.Columns(num_columns=2, grow_amount=5, **kwargs)
-    ])
+    ]
 
 
-# very hacky, much ugly
-def main(qtile):
+@hook.subscribe.startup_complete
+def set_logging():
     if DEBUG:
         qtile.cmd_debug()
 
-    logger.debug("Hello world!")
 
-    num_screens = len(qtile.conn.pseudoscreens)
-    init_layouts(num_screens)
-
-    if aiomanhole:
+if aiomanhole:
+    @hook.subscribe.startup_complete
+    def set_manhole():
         aiomanhole.start_manhole(port=7113, namespace={"qtile": qtile})
 
 
@@ -303,7 +302,7 @@ if __name__ in ["config", "__main__"]:
     mouse = init_mouse()
     groups = init_groups()
     floating_layout = init_floating_layout()
-    layouts = [layout.Max()]
+    layouts = init_layouts()
     screens = [Screen(top=init_top_bar(), wallpaper="~/.background.jpg")]
     widget_defaults = init_widgets_defaults()
 
