@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import psutil
 import socket
 import subprocess
 
@@ -245,6 +246,34 @@ def set_floating(window):
             window.floating = True
     except IndexError:
         pass
+
+
+@hook.subscribe.client_new
+def set_parent(window):
+    client_by_pid = {}
+    for client in qtile.windows_map.values():
+        client_pid = client.window.get_net_wm_pid()
+        client_by_pid[client_pid] = client
+
+    pid = window.window.get_net_wm_pid()
+    ppid = psutil.Process(pid).ppid()
+    while ppid:
+        window.parent = client_by_pid.get(ppid)
+        if window.parent:
+            return
+        ppid = psutil.Process(ppid).ppid()
+
+
+@hook.subscribe.client_new
+def swallow(window):
+    if window.parent:
+        window.parent.minimized = True
+
+
+@hook.subscribe.client_killed
+def unswallow(window):
+    if window.parent:
+        window.parent.minimized = False
 
 
 @hook.subscribe.screen_change
