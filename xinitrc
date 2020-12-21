@@ -3,4 +3,4 @@ if [[ -f ~/.xprofile ]]; then
    . ~/.xprofile
 fi
 
-exec dbus-launch --exit-with-session qtile
+exec dbus-launch --exit-with-session qtile start
