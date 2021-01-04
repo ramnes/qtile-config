@@ -207,7 +207,8 @@ def init_widgets():
                 background=GREY),
 
         TaskList(borderwidth=0, highlight_method="block", background=GREY,
-                 border=DARK_GREY, urgent_border=DARK_BLUE),
+                 border=DARK_GREY, urgent_border=DARK_BLUE,
+                 markup_floating="<i>{}</i>", markup_minimized="<s>{}</s>"),
 
         Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
