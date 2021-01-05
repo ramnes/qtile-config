@@ -182,7 +182,8 @@ def init_layouts():
                   border_focus=BLUE, border_focus_stack=ORANGE)
     layouts = [
         layout.Max(),
-        layout.Columns(num_columns=2, grow_amount=5, **kwargs)
+        layout.Columns(border_on_single=True, num_columns=2, grow_amount=5,
+                       **kwargs)
     ]
 
     if DEBUG:
