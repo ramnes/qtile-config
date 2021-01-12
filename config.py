@@ -108,7 +108,7 @@ def init_keys():
         Key([mod], "b", lazy.window.bring_to_front()),
         Key([mod], "s", lazy.layout.toggle_split()),
 
-        Key([mod], "semicolon", lazy.spawn("splatmoji type")),
+        Key([mod], "semicolon", lazy.spawn("splatmoji copypaste")),
         Key([mod], "r", lazy.spawn("rofi -show")),
         Key([mod], "u", lazy.spawn(browser)),
         Key([mod], "Return", lazy.spawn(terminal)),
