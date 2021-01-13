@@ -105,6 +105,7 @@ def init_keys():
         Key([mod], "space", lazy.next_layout()),
 
         Key([mod], "f", lazy.window.toggle_floating()),
+        Key([mod, "shift"], "f", lazy.window.toggle_fullscreen()),
         Key([mod], "b", lazy.window.bring_to_front()),
         Key([mod], "s", lazy.layout.toggle_split()),
 
@@ -310,6 +311,7 @@ if __name__ in ["config", "__main__"]:
     cursor_warp = True
     focus_on_window_activation = "never"
 
+    auto_fullscreen = False
     keys = init_keys()
     mouse = init_mouse()
     groups = init_groups()
