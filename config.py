@@ -70,6 +70,11 @@ def window_to_next_screen(qtile):
 
 
 def switch_screens(qtile):
+    if len(qtile.screens) == 1:
+        previous_switch = getattr(qtile, "previous_switch", None)
+        qtile.previous_switch = qtile.current_group
+        return qtile.current_screen.toggle_group(previous_switch)
+
     i = qtile.screens.index(qtile.current_screen)
     group = qtile.screens[i - 1].group
     qtile.current_screen.set_group(group)
