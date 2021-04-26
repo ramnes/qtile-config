@@ -1,21 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
-import psutil
 import socket
-import subprocess
 
-from libqtile import bar, hook, layout, qtile
+from libqtile import layout
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
-from libqtile.log_utils import logger
-from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
-                             GroupBox, Notify, PulseVolume, Prompt, Sep,
-                             Spacer, Systray, TaskList, TextBox)
-
-try:
-    import aiomanhole
-except ImportError:
-    aiomanhole = None
 
 DEBUG = os.environ.get("DEBUG")
 
@@ -184,8 +173,6 @@ def init_floating_layout():
 
 def init_layouts():
     margin = 0
-    if len(qtile.core.conn.pseudoscreens) > 1:
-        margin = 8
     kwargs = dict(margin=margin, border_width=1, border_normal=GREY,
                   border_focus=BLUE, border_focus_stack=ORANGE)
     layouts = [
@@ -201,76 +188,6 @@ def init_layouts():
             layout.Stack()
         ]
     return layouts
-
-
-def init_widgets():
-    widgets = [
-        CurrentLayoutIcon(scale=0.6, padding=8),
-        GroupBox(fontsize=9, padding=2, borderwidth=1, urgent_border=DARK_BLUE,
-                 disable_drag=True, highlight_method="border",
-                 this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
-                 this_current_screen_border=BLUE,
-                 other_current_screen_border=ORANGE),
-
-        TextBox(text="◤", fontsize=45, padding=-1, foreground=DARK_GREY,
-                background=GREY),
-
-        TaskList(borderwidth=0, highlight_method="block", background=GREY,
-                 border=DARK_GREY, urgent_border=DARK_BLUE,
-                 markup_floating="<i>{}</i>", markup_minimized="<s>{}</s>"),
-
-        Prompt(background=GREY),
-        Systray(background=GREY),
-        TextBox(text="◤", fontsize=45, padding=-1,
-                foreground=GREY, background=DARK_GREY),
-        Notify(fmt=" 🔥 {} "),
-        PulseVolume(fmt=" {}", emoji=True, volume_app="pavucontrol"),
-        PulseVolume(volume_app="pavucontrol"),
-        Clock(format=" ⏱ %H:%M  <span color='#666'>%A %d-%m-%Y</span>  ")
-    ]
-    if os.path.isdir("/sys/module/battery"):
-        widgets.insert(-1, Battery(format=" {char} {percent:2.0%} ",
-                                   charge_char="⚡", discharge_char="🔋",
-                                   full_char="⚡", unknown_char="⚡",
-                                   empty_char="⁉️ ", update_interval=2,
-                                   show_short_text=False,
-                                   default_text=""))
-        widgets.insert(-1, Battery(fmt="<span color='#666'>{}</span> ",
-                                   format="{hour:d}:{min:02d}",
-                                   update_interval=2, show_short_text=True,
-                                   default_text=""))
-    if DEBUG:
-        widgets += [Sep(), CurrentLayout()]
-    return widgets
-
-
-@hook.subscribe.client_new
-def set_floating(window):
-    floating_classes = ("nm-connection-editor", "pavucontrol")
-    try:
-        if window.window.get_wm_class()[0] in floating_classes:
-            window.floating = True
-    except IndexError:
-        pass
-
-
-@hook.subscribe.screen_change
-def set_screens(event):
-    logger.debug("Handling event: {}".format(event))
-    subprocess.run(["autorandr", "--change"])
-    qtile.restart()
-
-
-@hook.subscribe.startup_complete
-def set_logging():
-    if DEBUG:
-        qtile.cmd_debug()
-
-
-if aiomanhole:
-    @hook.subscribe.startup_complete
-    def set_manhole():
-        aiomanhole.start_manhole(port=7113, namespace={"qtile": qtile})
 
 
 if __name__ in ["config", "__main__"]:
@@ -292,8 +209,6 @@ if __name__ in ["config", "__main__"]:
     groups = init_groups()
     floating_layout = init_floating_layout()
     layouts = init_layouts()
-    widgets = init_widgets()
-    bar = bar.Bar(widgets=widgets, size=22, opacity=1)
-    screens = [Screen(top=bar, wallpaper="~/.background.jpg")]
+    screens = [Screen(wallpaper="~/.background.jpg")]
     widget_defaults = {"font": "DejaVu", "fontsize": 11, "padding": 2,
                        "background": DARK_GREY}
