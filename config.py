@@ -82,8 +82,8 @@ def switch_screens(qtile):
 
 def init_keys():
     keys = [
-        Key([mod], "Left", lazy.screen.prev_group(skip_managed=True)),
-        Key([mod], "Right", lazy.screen.next_group(skip_managed=True)),
+        Key([mod], "Left", lazy.screen.prev_group(skip_empty=True)),
+        Key([mod], "Right", lazy.screen.next_group(skip_empty=True)),
 
         Key([mod, "shift"], "Left", lazy.function(window_to_previous_column_or_group)),
         Key([mod, "shift"], "Right", lazy.function(window_to_next_column_or_group)),
