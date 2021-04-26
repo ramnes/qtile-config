@@ -186,7 +186,7 @@ def init_layouts():
     margin = 0
     if len(qtile.conn.pseudoscreens) > 1:
         margin = 8
-    kwargs = dict(margin=margin, border_width=1, border_normal=DARK_GREY,
+    kwargs = dict(margin=margin, border_width=1, border_normal=GREY,
                   border_focus=BLUE, border_focus_stack=ORANGE)
     layouts = [
         layout.Max(),
@@ -206,8 +206,8 @@ def init_layouts():
 def init_widgets():
     widgets = [
         CurrentLayoutIcon(scale=0.6, padding=8),
-        GroupBox(fontsize=8, padding=4, borderwidth=1, urgent_border=DARK_BLUE,
-                 disable_drag=True, highlight_method="block",
+        GroupBox(fontsize=9, padding=2, borderwidth=1, urgent_border=DARK_BLUE,
+                 disable_drag=True, highlight_method="border",
                  this_screen_border=DARK_BLUE, other_screen_border=DARK_ORANGE,
                  this_current_screen_border=BLUE,
                  other_current_screen_border=ORANGE),
