@@ -115,6 +115,7 @@ def init_keys():
         Key([mod], "s", lazy.layout.toggle_split()),
 
         Key([mod], "semicolon", lazy.spawn("splatmoji copypaste")),
+        Key([mod], "g", lazy.labelgroup()),
         Key([mod], "r", lazy.spawn("rofi -show")),
         Key([mod], "u", lazy.spawn(browser)),
         Key([mod], "Return", lazy.spawn(terminal)),
@@ -217,6 +218,7 @@ def init_widgets():
                  border=DARK_GREY, urgent_border=DARK_BLUE,
                  markup_floating="<i>{}</i>", markup_minimized="<s>{}</s>"),
 
+        Prompt(background=GREY),
         Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
