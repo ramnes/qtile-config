@@ -108,6 +108,7 @@ def init_keys():
         Key([mod, "shift"], "Down", lazy.layout.shuffle_down()),
 
         Key([mod], "space", lazy.next_layout()),
+        Key([mod, "shift"], "space", lazy.prev_layout()),
 
         Key([mod], "f", lazy.window.toggle_floating()),
         Key([mod, "shift"], "f", lazy.window.toggle_fullscreen()),
