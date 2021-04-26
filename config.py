@@ -245,11 +245,6 @@ def init_widgets():
 
 @hook.subscribe.client_new
 def set_floating(window):
-    normal_hints = window.window.get_wm_normal_hints()
-    if normal_hints and normal_hints["max_width"]:
-        window.floating = True
-        return
-
     floating_classes = ("nm-connection-editor", "pavucontrol")
     try:
         if window.window.get_wm_class()[0] in floating_classes:
