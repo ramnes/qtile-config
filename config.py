@@ -184,7 +184,7 @@ def init_floating_layout():
 
 def init_layouts():
     margin = 0
-    if len(qtile.conn.pseudoscreens) > 1:
+    if len(qtile.core.conn.pseudoscreens) > 1:
         margin = 8
     kwargs = dict(margin=margin, border_width=1, border_normal=GREY,
                   border_focus=BLUE, border_focus_stack=ORANGE)
