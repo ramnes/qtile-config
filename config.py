@@ -196,9 +196,9 @@ def init_layouts():
 
     if DEBUG:
         layouts += [
-            floating_layout, layout.Zoomy(), layout.Tile(), layout.Matrix(),
-            layout.TreeTab(), layout.MonadTall(margin=10), layout.RatioTile(),
-            layout.Stack()
+            floating_layout, layout.Bsp(fair=False), layout.Zoomy(), layout.Tile(),
+            layout.Matrix(), layout.TreeTab(), layout.MonadTall(margin=10),
+            layout.RatioTile(), layout.Stack()
         ]
     return layouts
 
