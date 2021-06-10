@@ -246,7 +246,7 @@ def init_widgets():
 
 @hook.subscribe.client_new
 def set_floating(window):
-    floating_classes = ("nm-connection-editor", "pavucontrol")
+    floating_classes = ("nm-connection-editor", "pavucontrol", "gnome-screenshot")
     try:
         if window.window.get_wm_class()[0] in floating_classes:
             window.floating = True
