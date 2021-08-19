@@ -203,6 +203,10 @@ def init_layouts():
     return layouts
 
 
+def parse_notification(message):
+    return message.replace("\n", "⏎")
+
+
 def init_widgets():
     widgets = [
         CurrentLayoutIcon(scale=0.6, padding=8),
@@ -223,7 +227,7 @@ def init_widgets():
         Systray(background=GREY),
         TextBox(text="◤", fontsize=45, padding=-1,
                 foreground=GREY, background=DARK_GREY),
-        Notify(fmt=" 🔥 {} "),
+        Notify(fmt=" 🔥 {} ", parse_text=parse_notification),
         PulseVolume(fmt=" {}", emoji=True, volume_app="pavucontrol"),
         PulseVolume(volume_app="pavucontrol"),
         Clock(format=" ⏱ %H:%M  <span color='#666'>%A %d-%m-%Y</span>  ")
