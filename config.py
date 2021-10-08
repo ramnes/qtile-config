@@ -27,6 +27,24 @@ ORANGE = "#dd6600"
 DARK_ORANGE = "#371900"
 
 
+def focus_previous_group(qtile):
+    group = qtile.current_screen.group
+    group_index = qtile.groups.index(group)
+    previous_group = group.get_previous_group(skip_empty=True)
+    previous_group_index = qtile.groups.index(previous_group)
+    if previous_group_index < group_index:
+        qtile.current_screen.set_group(previous_group)
+
+
+def focus_next_group(qtile):
+    group = qtile.current_screen.group
+    group_index = qtile.groups.index(group)
+    next_group = group.get_next_group(skip_empty=True)
+    next_group_index = qtile.groups.index(next_group)
+    if next_group_index > group_index:
+        qtile.current_screen.set_group(next_group)
+
+
 def window_to_previous_column_or_group(qtile):
     layout = qtile.current_group.layout
     group_index = qtile.groups.index(qtile.current_group)
@@ -82,8 +100,8 @@ def switch_screens(qtile):
 
 def init_keys():
     keys = [
-        Key([mod], "Left", lazy.screen.prev_group(skip_empty=True)),
-        Key([mod], "Right", lazy.screen.next_group(skip_empty=True)),
+        Key([mod], "Left", lazy.function(focus_previous_group)),
+        Key([mod], "Right", lazy.function(focus_next_group)),
 
         Key([mod, "shift"], "Left", lazy.function(window_to_previous_column_or_group)),
         Key([mod, "shift"], "Right", lazy.function(window_to_next_column_or_group)),
