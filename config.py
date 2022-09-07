@@ -277,13 +277,6 @@ def set_floating(window):
         pass
 
 
-@hook.subscribe.screen_change
-def set_screens(event):
-    logger.debug("Handling event: {}".format(event))
-    subprocess.run(["autorandr", "--change"])
-    qtile.restart()
-
-
 @hook.subscribe.startup_complete
 def set_logging():
     if DEBUG:
