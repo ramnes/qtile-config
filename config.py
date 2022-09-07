@@ -145,7 +145,7 @@ def init_keys():
         Key([mod, "shift"], "q", lazy.shutdown()),
         Key([mod], "v", lazy.validate_config()),
 
-        Key([], "Print", lazy.spawn("gnome-screenshot -i")),
+        Key([], "Print", lazy.spawn("gnome-screenshot -a")),
         Key([mod], "Print", lazy.spawn("gnome-screenshot -p")),
         Key([], "Scroll_Lock", lazy.spawn(screenlocker)),
         Key([mod], "Delete", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
