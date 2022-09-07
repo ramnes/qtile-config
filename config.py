@@ -140,7 +140,8 @@ def init_keys():
         Key([mod], "Return", lazy.spawn(terminal)),
         Key([mod], "BackSpace", lazy.window.kill()),
 
-        Key([mod, "shift"], "r", lazy.restart()),
+        Key([mod, "shift"], "r", lazy.reload_config()),
+        Key([mod, "control"], "r", lazy.restart()),
         Key([mod, "shift"], "q", lazy.shutdown()),
         Key([mod], "v", lazy.validate_config()),
 
