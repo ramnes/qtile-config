@@ -154,6 +154,9 @@ def init_keys():
         Key([mod], "Insert", lazy.spawn("spotify-dbus playpause")),
         Key([mod], "End", lazy.spawn("spotify-dbus next")),
         Key([mod], "Home", lazy.spawn("spotify-dbus previous")),
+
+        Key([mod], "F11", lazy.spawn("headset")),
+        Key([mod], "F12", lazy.spawn("speakers")),
     ]
     if DEBUG:
         keys += [
