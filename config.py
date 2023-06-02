@@ -56,7 +56,7 @@ def window_to_previous_column_or_group(qtile):
         if group_index != 0:
             qtile.current_window.togroup(previous_group_name)
     else:
-        layout.cmd_shuffle_left()
+        layout.shuffle_left()
 
 
 def window_to_next_column_or_group(qtile):
@@ -70,7 +70,7 @@ def window_to_next_column_or_group(qtile):
         if group_index + 1 != len(qtile.groups):
             qtile.current_window.togroup(next_group_name)
     else:
-        layout.cmd_shuffle_right()
+        layout.shuffle_right()
 
 
 def window_to_previous_screen(qtile):
@@ -283,7 +283,7 @@ def set_floating(window):
 @hook.subscribe.startup_complete
 def set_logging():
     if DEBUG:
-        qtile.cmd_debug()
+        qtile.debug()
 
 
 if aiomanhole:
