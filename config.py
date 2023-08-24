@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import platform
 import psutil
 import socket
 import subprocess
@@ -8,9 +9,9 @@ from libqtile import bar, hook, layout, qtile
 from libqtile.config import Click, Drag, Group, Key, Screen
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
-from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
-                             GroupBox, Notify, PulseVolume, Prompt, Sep,
-                             Spacer, Systray, TaskList, TextBox)
+# from libqtile.widget import (Battery, Clock, CurrentLayout, CurrentLayoutIcon,
+#                              GroupBox, Notify, PulseVolume, Prompt, Sep,
+#                              Spacer, Systray, TaskList, TextBox)
 
 try:
     import aiomanhole
@@ -133,31 +134,44 @@ def init_keys():
         Key([mod], "b", lazy.window.bring_to_front()),
         Key([mod], "s", lazy.layout.toggle_split()),
 
-        Key([mod, "control"], "space", lazy.spawn("splatmoji type")),
         Key([mod], "g", lazy.labelgroup()),
-        Key([mod], "r", lazy.spawn("rofi -show")),
-        Key([mod], "u", lazy.spawn(browser)),
-        Key([mod], "Return", lazy.spawn(terminal)),
         Key([mod], "BackSpace", lazy.window.kill()),
 
         Key([mod, "shift"], "r", lazy.reload_config()),
         Key([mod, "control"], "r", lazy.restart()),
         Key([mod, "shift"], "q", lazy.shutdown()),
         Key([mod], "v", lazy.validate_config()),
-
-        Key([], "Print", lazy.spawn("gnome-screenshot -a")),
-        Key([mod], "Print", lazy.spawn("gnome-screenshot -p")),
-        Key([], "Scroll_Lock", lazy.spawn(screenlocker)),
-        Key([mod], "Delete", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
-        Key([mod], "Prior", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
-        Key([mod], "Next", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
-        Key([mod], "Insert", lazy.spawn("spotify-dbus playpause")),
-        Key([mod], "End", lazy.spawn("spotify-dbus next")),
-        Key([mod], "Home", lazy.spawn("spotify-dbus previous")),
-
-        Key([mod], "F11", lazy.spawn("headset")),
-        Key([mod], "F12", lazy.spawn("speakers")),
     ]
+
+    if platform.system() == "Darwin":
+        keys += [
+            Key([mod], "u", lazy.spawn("open -na 'Google Chrome")),
+            Key([mod], "Return", lazy.spawn("open -na iTerm")),
+
+            Key([mod], "Insert", lazy.spawn("spotify pause")),
+            Key([mod], "End", lazy.spawn("spotify next")),
+            Key([mod], "Home", lazy.spawn("spotify prev")),
+        ]
+    else:
+        keys += [
+            Key([mod, "control"], "space", lazy.spawn("splatmoji type")),
+            Key([mod], "r", lazy.spawn("rofi -show")),
+            Key([mod], "u", lazy.spawn("google-chrome")),
+            Key([mod], "Return", lazy.spawn("roxterm")),
+
+            Key([], "Print", lazy.spawn("gnome-screenshot -a")),
+            Key([mod], "Print", lazy.spawn("gnome-screenshot -p")),
+            Key([], "Scroll_Lock", lazy.spawn("i3lock -d")),
+            Key([mod], "Delete", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+            Key([mod], "Prior", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")),
+            Key([mod], "Next", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")),
+            Key([mod], "Insert", lazy.spawn("spotify-dbus playpause")),
+            Key([mod], "End", lazy.spawn("spotify-dbus next")),
+            Key([mod], "Home", lazy.spawn("spotify-dbus previous")),
+            Key([mod], "F11", lazy.spawn("headset")),
+            Key([mod], "F12", lazy.spawn("speakers")),
+        ]
+
     if DEBUG:
         keys += [
             Key([mod], "Tab", lazy.layout.next()),
@@ -286,10 +300,14 @@ def set_logging():
         qtile.debug()
 
 
-if aiomanhole:
-    @hook.subscribe.startup_complete
-    def set_manhole():
-        aiomanhole.start_manhole(port=7113, namespace={"qtile": qtile})
+@hook.subscribe.startup_complete
+def set_manhole():
+    if not aiomanhole:
+        logger.info("aiomanhole not installed, not running manhole")
+        return
+
+    logger.info("Running manhole on port 7113")
+    aiomanhole.start_manhole(port=7113, namespace={"qtile": qtile})
 
 
 if __name__ in ["config", "__main__"]:
@@ -298,9 +316,6 @@ if __name__ in ["config", "__main__"]:
         os.environ["PATH"] = "{}:{}".format(local_bin, os.environ["PATH"])
 
     mod = "mod4"
-    browser = "google-chrome"
-    terminal = "roxterm"
-    screenlocker = "i3lock -d"
     hostname = socket.gethostname()
     cursor_warp = True
     focus_on_window_activation = "never"
@@ -309,10 +324,11 @@ if __name__ in ["config", "__main__"]:
     keys = init_keys()
     mouse = init_mouse()
     groups = init_groups()
-    floating_layout = init_floating_layout()
-    layouts = init_layouts()
-    widgets = init_widgets()
-    bar = bar.Bar(widgets=widgets, size=22, opacity=1)
-    screens = [Screen(top=bar, wallpaper="~/.background.jpg")]
-    widget_defaults = {"font": "DejaVu", "fontsize": 11, "padding": 2,
-                       "background": DARK_GREY}
+    # floating_layout = init_floating_layout()
+    # layouts = init_layouts()
+    # widgets = init_widgets()
+    # bar = bar.Bar(widgets=widgets, size=22, opacity=1)
+    # screens = [Screen(top=bar, wallpaper="~/.background.jpg")]
+    # widget_defaults = {"font": "DejaVu", "fontsize": 11, "padding": 2,
+    #                    "background": DARK_GREY}
+    screens = [Screen()]
