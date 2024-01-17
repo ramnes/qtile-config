@@ -9,6 +9,7 @@ from libqtile.lazy import lazy
 from libqtile.log_utils import logger
 from libqtile.widget import (
     Battery,
+    Bluetooth,
     Clock,
     CurrentLayout,
     CurrentLayoutIcon,
@@ -296,6 +297,7 @@ def init_widgets():
             text="◤", fontsize=45, padding=-1, foreground=GREY, background=DARK_GREY
         ),
         Notify(fmt=" 🔥 {} ", parse_text=parse_notification),
+        Bluetooth(fmt=" ᛒ {} ", default_text="{connected_devices}"),
         PulseVolume(fmt=" {}", emoji=True, volume_app="pavucontrol"),
         PulseVolume(volume_app="pavucontrol"),
         Clock(format=" ⏱ %H:%M  <span color='#666'>%A %d-%m-%Y</span>  "),
