@@ -296,7 +296,15 @@ def init_widgets():
         TextBox(
             text="◤", fontsize=45, padding=-1, foreground=GREY, background=DARK_GREY
         ),
-        Notify(fmt=" 🔥 {} ", parse_text=parse_notification),
+        Notify(
+            fmt=" 🔥 {} ",
+            parse_text=parse_notification,
+            background=DARK_GREY,
+            background_low=DARK_GREY,
+            background_urgent=DARK_GREY,
+            default_timeout=None,
+            default_timeout_low=None,
+        ),
         Bluetooth(fmt=" ᛒ {} ", default_text="{connected_devices}"),
         PulseVolume(fmt=" {}", emoji=True, volume_app="pavucontrol"),
         PulseVolume(volume_app="pavucontrol"),
